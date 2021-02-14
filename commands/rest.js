@@ -9,7 +9,6 @@ module.exports = {
     cooldown: 360,
     execute(message, args, game) {
         const dialog = [];
-        const innPrice = 50;
         const userName = message.author.username;
         if (!userName) {
             return;

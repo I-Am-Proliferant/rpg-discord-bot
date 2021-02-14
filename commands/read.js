@@ -24,14 +24,10 @@ module.exports = {
         }
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-                    if(dialog.length) {
             message.channel.send(dialog.join('\n'));
-        }
             return;
         }
-
         
-
         //... Move enemy turn and check into new game.endTurn function
         //... if (player.isTurn)
         if (!game.enemy || game.turn.userName === userName) {
@@ -39,22 +35,19 @@ module.exports = {
             const target = (game.getPlayer(args[1])) ? game.getPlayer(args[1]) : player;
             if (!scroll) {
                 dialog.push(`Can't find the scroll '${args[0]}' in your inventory.`)
-                        if(dialog.length) {
-            message.channel.send(dialog.join('\n'));
-        }
+                message.channel.send(dialog.join('\n'));
                 return;
             }
+            const amount = random(scroll.max,scroll.min);
             scroll.effects.forEach(effect => {
                 if (effect === 'heal') {
-                    const amount = random(scroll.max,scroll.min)
                     dialog.push(target.heal(amount));
                 }
             });
 
 
         }
-
-                if(dialog.length) {
+        if(dialog.length) {
             message.channel.send(dialog.join('\n'));
         }
     }
