@@ -1,3 +1,5 @@
+const utils = require('../lib/utils');
+
 module.exports = {
     name: 'combat',
     aliases: ['c'],
@@ -8,7 +10,7 @@ module.exports = {
     cooldown: 5,
     execute(message, args, game) {
         if (!game.combat || !game.combat.length) {
-            message.channel.send(`There is currently no active combat`);
+            utils.sendMessage(message.channel,`There is currently no active combat`);
             return;
         }
         if (args[0] === 'list') {
@@ -17,10 +19,10 @@ module.exports = {
                 const info = `${player.name}: ${player.hp}/${player.hpMax} #${player.speed} ${player.dead}`;
                 combatList.push(info);
             });
-            message.channel.send(combatList);
+            utils.sendMessage(message.channel,combatList);
         }
         else if (args[0] === 'skip') {
-            message.channel.send(game.updateCombat());
+            utils.sendMessage(message.channel,game.updateCombat());
         }
     }
 };

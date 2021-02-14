@@ -1,5 +1,7 @@
 const { Player } = require('../lib/player.js');
 const { random } = require('../lib/random.js');
+const utils = require('../lib/utils');
+
 module.exports = {
     name: 'store',
     aliases: ['buy', 'shop'],
@@ -17,20 +19,20 @@ module.exports = {
         const player = game.getPlayer(userName);
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
             return;
         }
 
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
             return;
         }
 
         if (!args[0]) {
             if(!game.store[0]) {
                 dialog.push(`Whoops. Looks like I'm all out of items for the day. Try again tomorrow.`);
-                message.channel.send(dialog.join('\n'));
+                utils.sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
             game.store.forEach(item => {
@@ -41,7 +43,7 @@ module.exports = {
             const storeItem = game.store.find(e => e.name === args[0]);
             if (!storeItem) {
                 dialog.push(`Doesn't look like I have that item in stock.`);
-                message.channel.send(dialog.join('\n'));
+                utils.sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
 
@@ -60,7 +62,7 @@ module.exports = {
             }
         }
         if(dialog.length) {
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };

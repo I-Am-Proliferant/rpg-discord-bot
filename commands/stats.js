@@ -1,3 +1,5 @@
+const utils = require('../lib/utils');
+
 module.exports = {
     name: 'stats',
     aliases: ['s','sheet'],
@@ -36,10 +38,10 @@ module.exports = {
             statSheet.push(`-----------------------`);
             statSheet.push(player.showInventory());
             statSheet.push("```");
-            message.channel.send(statSheet);
+            utils.sendMessage(message.channel,statSheet);
         }
         else {
-            message.channel.send(`Cannot find stats for ${userName}`);
+            utils.sendMessage(message.channel,`Cannot find stats for ${userName}`);
         }
     },
 };

@@ -1,4 +1,6 @@
 const { Player } = require('../lib/player.js');
+const utils = require('../lib/utils');
+
 module.exports = {
     name: 'init',
     aliases: ['ii'],
@@ -12,12 +14,12 @@ module.exports = {
         const player = game.getPlayer(userName);
         // const inGame = ( false );
         if (player) {
-            message.channel.send(`You're already part of the game ${userName}`);
+            utils.sendMessage(message.channel,`You're already part of the game ${userName}`);
         }
         else {
             const newPlayer = new Player(userName, true);
             game.players.push(newPlayer);
-            message.channel.send(`${userName} has joined the game!.`);
+            utils.sendMessage(message.channel,`${userName} has joined the game!.`);
         }
 
     },

@@ -1,4 +1,6 @@
 const { random } = require('../lib/random');
+const utils = require('../lib/utils');
+
 module.exports = {
     name: 'rest',
     aliases: ['rr', 'sleep'],
@@ -16,7 +18,7 @@ module.exports = {
         const player = game.getPlayer(userName);
 
         if (!player) {
-            message.channel.send(`You don't seem to exist. Maybe try the !init command?`);
+            utils.sendMessage(message.channel,`You don't seem to exist. Maybe try the !init command?`);
             return;
         }
 
@@ -24,7 +26,7 @@ module.exports = {
         if (inCombat) {
             dialog.push(`You can't do this while in combat.`);
             if(dialog.length) {
-                message.channel.send(dialog.join('\n'));
+                utils.sendMessage(message.channel,dialog.join('\n'));
             }
             return;
         }
@@ -35,14 +37,14 @@ module.exports = {
         if (player.hp >= player.hpMax) {
             dialog.push(`You are currently at full health.`);
             if(dialog.length) {
-                message.channel.send(dialog.join('\n'));
+                utils.sendMessage(message.channel,dialog.join('\n'));
             }
             return;
         }
 
         dialog.push(player.heal(random((player.level * 2) + 3, player.level)));
         if(dialog.length) {
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };

@@ -1,4 +1,6 @@
 const { Player } = require('../lib/player.js');
+const utils = require('../lib/utils');
+
 module.exports = {
     name: 'adventure',
     aliases: ['a'],
@@ -15,11 +17,11 @@ module.exports = {
         const dialog = [];
         const player = game.getPlayer(userName);
         if (!player) {
-            message.channel.send(`You don't seem to exist ${userName}. Maybe try the !init command?`);
+            utils.sendMessage(message.channel,`You don't seem to exist ${userName}. Maybe try the !init command?`);
             return;
         }
         if (player.dead) {
-            message.channel.send(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
+            utils.sendMessage(message.channel,`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
             return;
         }
 
@@ -58,7 +60,7 @@ module.exports = {
         });
 
         if(dialog.length) {
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };

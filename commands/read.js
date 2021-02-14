@@ -1,5 +1,8 @@
 const { Player } = require('../lib/player.js');
 const { random } = require('../lib/random.js');
+const utils = require('../lib/utils');
+
+//... This might turn into !use once base item class is setup
 module.exports = {
     name: 'read',
     aliases: ['scroll'],
@@ -17,25 +20,24 @@ module.exports = {
         const player = game.getPlayer(userName);
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
-                    if(dialog.length) {
-            message.channel.send(dialog.join('\n'));
-        }
+            if(dialog.length) {
+                utils.sendMessage(message.channel,dialog.join('\n'));
+            }
             return;
         }
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
             return;
         }
         
-        //... Move enemy turn and check into new game.endTurn function
         //... if (player.isTurn)
         if (!game.enemy || game.turn.userName === userName) {
             const scroll = player.getFromInventory(args[0]);
             const target = (game.getPlayer(args[1])) ? game.getPlayer(args[1]) : player;
             if (!scroll) {
                 dialog.push(`Can't find the scroll '${args[0]}' in your inventory.`)
-                message.channel.send(dialog.join('\n'));
+                utils.sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
             const amount = random(scroll.max,scroll.min);
@@ -48,7 +50,7 @@ module.exports = {
 
         }
         if(dialog.length) {
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };

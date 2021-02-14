@@ -1,3 +1,5 @@
+const utils = require('../lib/utils');
+
 module.exports = {
     name: 'run',
     aliases: ['retreat', 'escape'],
@@ -16,7 +18,7 @@ module.exports = {
         if (!game.enemy || !game.turn.isCombat) {
             dialog.push(`There is currently no active combat. Try !adventure to start one.`);
             if(dialog.length) {
-                message.channel.send(dialog.join('\n'));
+                utils.sendMessage(message.channel,dialog.join('\n'));
             }
             return;
         }
@@ -25,10 +27,9 @@ module.exports = {
             const player = game.getPlayer(userName);
             if (!player) {
                 dialog.push(`Who are you ${userName}?`);
-                message.channel.send(dialog.join('\n'));
+                utils.sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
-            const combatList = []
             
             
             // game.combat.forEach(function(combatPlayer) {
@@ -74,7 +75,7 @@ module.exports = {
 
         }
         if(dialog.length) {
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };

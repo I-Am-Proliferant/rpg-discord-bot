@@ -1,3 +1,4 @@
+const utils = require('../lib/utils');
 module.exports = {
     name: 'attack',
     aliases: ['aa'],
@@ -15,7 +16,7 @@ module.exports = {
 
         if (!game.enemy || !game.turn.isCombat) {
             dialog.push(`There is currently no active combat. Try !adventure to start one.`);
-            message.channel.send(dialog);
+            utils.sendMessage(message.channel,dialog);
             return;
         }
 
@@ -23,7 +24,7 @@ module.exports = {
             const player = game.getPlayer(userName);
             if(!player) {
                 dialog.push(`You are not in combat. Try !adventure to join one.`);
-                message.channel.send(dialog);
+                utils.sendMessage(message.channel,dialog);
                 return;
             }
             else {
@@ -45,7 +46,8 @@ module.exports = {
             // }
         }
         if(dialog.length) {
-            message.channel.send(dialog.join('\n'));
+            utils.sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };
+
