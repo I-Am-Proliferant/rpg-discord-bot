@@ -49,7 +49,7 @@ module.exports = {
                 player.gold -= storeItem.price;
                 player.addToInventory(storeItem);
                 //... Add option to buy in bulk
-                storeItem.quantity -= 1;
+                storeItem.quantity--;
                 if (storeItem.quantity <= 0) {
                     game.store.splice(game.store.indexOf(storeItem), 1);
                 }

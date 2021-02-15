@@ -58,8 +58,13 @@ module.exports = {
             const amount = randomRange(scroll.range.max,scroll.range.min);
             scroll.effects.forEach(effect => {
                 if (effect.name === 'heal' && effect.uses > 0) {
-                    dialog.push(target.heal(amount));
-                    effect.uses--;
+                    if (target.hp >= target.hpMax) {
+                        dialog.push(`${target.name} is already at full health.`);
+                    }
+                    else {
+                        dialog.push(target.heal(amount));
+                        effect.uses--;
+                    }
                     if (effect.uses <= 0) {
                         effect.uses = effect.usesMax;
                         player.getFromInventory(scroll.name);

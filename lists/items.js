@@ -1,6 +1,7 @@
 module.exports = [
     {name:'token', type:'coin', description:'Proof that you defeated an enemy', target: [], effects: [], range:{}, stats:{}, value: 1, requirements:{}},
     {name:'sword', type:'right', description:'Common sword', target: ['enemy'], effects: ['damage'], range:{}, stats:{ 'power': 15 }, value: 500, requirements:{level:1}},
+    {name:'longSword', type:'right', description:'Common sword', target: ['enemy'], effects: ['damage'], range:{}, stats:{ 'power': 20 }, value: 750, requirements:{level:1}},
     {name:'greatSword', type:'2hand', description:'Common two-handed sword', target: ['enemy'], effects: ['damage'], range:{}, stats:{ 'power': 25 }, value: 750, requirements:{level:3}},
     {name:'shield', type:'left', description:'Common shield', target: [], effects: [], range:{}, stats:{ 'defense': 5 }, value: 250, requirements:{level:1}},
     {name:'buckler', type:'left', description:'Common buckler', target: [], effects: [], range:{}, stats:{ 'defense': 8 }, value: 450, requirements:{level:2}},

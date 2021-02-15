@@ -8,7 +8,7 @@ module.exports = {
     args: false,
     usage: '',
     guildOnly: false,
-    cooldown: 360,
+    cooldown: 1,
     execute(message, args, game) {
         const dialog = [];
         const userName = message.author.username;
