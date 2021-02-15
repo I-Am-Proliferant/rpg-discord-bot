@@ -1,4 +1,3 @@
-const { Player } = require('../lib/player.js');
 const Discord = require('discord.js');
 module.exports = {
     name: 'msg',

@@ -1,5 +1,3 @@
-const { Player } = require('../lib/player.js');
-const { random } = require('../lib/random.js');
 const utils = require('../lib/utils');
 
 module.exports = {

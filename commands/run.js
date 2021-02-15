@@ -31,26 +31,9 @@ module.exports = {
                 return;
             }
             
-            
-            // game.combat.forEach(function(combatPlayer) {
-            //     const info = `${combatPlayer.name}: ${combatPlayer.hp}/${combatPlayer.hpMax} #${combatPlayer.speed} ${combatPlayer.dead}`;
-            //     combatList.push(info);
-            // });
-            // message.channel.send(combatList);
-            
-            
             dialog.push(`${player.name} retreats from combat!`);
             game.combat.splice(game.combat.indexOf(player), 1);
             
-            // const combatList2 = []
-            // combatList2.push(`Yes, you've made it this far`);
-            // game.combat.forEach(function(combatPlayer) {
-            //     const info = `${combatPlayer.name}: ${combatPlayer.hp}/${combatPlayer.hpMax} #${combatPlayer.speed} ${combatPlayer.dead}`;
-            //     combatList2.push(info);
-            // });
-            // message.channel.send(combatList2);
-
-            // if (!game.enemy || game.turn.isCombat === false) {
             if (game.combat.length === 1 && game.combat[0].name === game.enemy.name) {
                 game.endCombat();
                 dialog.push(`All heroes have fled or fallen. The monsters have won!`);

@@ -32,18 +32,6 @@ module.exports = {
                 dialog.push(game.updateCombat());
             }
 
-            // if (game.turn.userName === game.enemy.name) {
-            //     const target = game.getRandomPlayer();
-            //     if (!target) {
-            //         dialog.push(`Target returned false.`);
-            //         if(dialog.length) {
-            //             message.channel.send(dialog.join('\n'));
-            //         }
-            //         return;
-            //     }
-            //     dialog.push(game.enemy.attack(target));
-            //     dialog.push(game.updateCombat());
-            // }
         }
         if(dialog.length) {
             utils.sendMessage(message.channel,dialog.join('\n'));
