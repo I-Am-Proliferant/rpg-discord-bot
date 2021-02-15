@@ -21,7 +21,7 @@ module.exports = {
         }
 
         if (game.turn.userName === userName) {
-            const player = game.getPlayer(userName);
+            const player = game.getPlayerFromCombat(userName);
             if(!player) {
                 dialog.push(`You are not in combat. Try !adventure to join one.`);
                 utils.sendMessage(message.channel,dialog);
