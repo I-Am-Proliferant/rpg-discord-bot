@@ -1,5 +1,5 @@
 const { Player } = require('../lib/player.js');
-const { random } = require('../lib/random.js');
+const { randomRange } = require('../lib/random.js');
 const utils = require('../lib/utils');
 
 //... This might turn into !use once base item class is setup
@@ -33,17 +33,49 @@ module.exports = {
         
         //... if (player.isTurn)
         if (!game.enemy || game.turn.userName === userName) {
-            const scroll = player.getFromInventory(args[0]);
-            const target = (game.getPlayer(args[1])) ? game.getPlayer(args[1]) : player;
+            const scroll = player.getFromInventory(args[0],false);
+            let target = false;
+
             if (!scroll) {
                 dialog.push(`Can't find the scroll '${args[0]}' in your inventory.`)
                 utils.sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
-            const amount = random(scroll.max,scroll.min);
+            if (!scroll.target[0]) {
+                dialog.push('This scroll doesn\'t have a target.')
+                utils.sendMessage(message.channel,dialog.join('\n'));
+                return
+            }
+            if (scroll.target.find(e => e === 'enemy')) {
+                target = game.enemy;
+            }
+            else if (scroll.target.find(e => e === 'player')) {
+                target = (game.getPlayer(args[1])) ? game.getPlayer(args[1]) : player;
+            }
+            else {
+                target = player;
+            }
+
+            const amount = randomRange(scroll.range.max,scroll.range.min);
             scroll.effects.forEach(effect => {
-                if (effect === 'heal') {
+                if (effect.name === 'heal' && effect.uses > 0) {
                     dialog.push(target.heal(amount));
+                    effect.uses--;
+                    if (effect.uses <= 0) {
+                        effect.uses = effect.usesMax;
+                        player.getFromInventory(scroll.name);
+                    }
+                }
+                else if (effect.name === 'burn' && effect.uses > 0) {
+                    dialog.push(`A mote of flame burns ${target.name} for ${amount} damage.`);
+                    dialog.push(target.damage(amount));
+                    effect.uses--;
+                    if (effect.uses <= 0) {
+                        effect.uses = effect.usesMax;
+                        player.getFromInventory(scroll.name);
+                    }
+                    //... TODO: Need to fix turn handling for scrolls.
+                    dialog.push(game.updateCombat());
                 }
             });
 

@@ -1,4 +1,4 @@
-const { random } = require('../lib/random');
+const { randomRange } = require('../lib/random');
 const utils = require('../lib/utils');
 
 module.exports = {
@@ -42,7 +42,7 @@ module.exports = {
             return;
         }
 
-        dialog.push(player.heal(random((player.level * 2) + 3, player.level)));
+        dialog.push(player.heal(randomRange((player.level * 2) + 3, player.level)));
         if(dialog.length) {
             utils.sendMessage(message.channel,dialog.join('\n'));
         }

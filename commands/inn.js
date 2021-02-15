@@ -1,4 +1,4 @@
-const { random } = require('../lib/random');
+const { randomRange } = require('../lib/random');
 const utils = require('../lib/utils');
 
 module.exports = {
@@ -45,7 +45,7 @@ module.exports = {
 
         if (player.gold >= innPrice) {
             player.gold -= innPrice;
-            dialog.push(player.heal(random(player.hpMax, player.hpMax / 3)));
+            dialog.push(player.heal(randomRange(player.hpMax, player.hpMax / 3)));
         }
         else {
             dialog.push(`Come back when you have atleast ${innPrice} gold.`);

@@ -53,7 +53,7 @@ module.exports = {
                 //... Add option to buy in bulk
                 storeItem.quantity -= 1;
                 if (storeItem.quantity <= 0) {
-                    game.store.splice (game.store.indexOf(storeItem), 2);
+                    game.store.splice(game.store.indexOf(storeItem), 1);
                 }
                 dialog.push(`You bought 1 ${storeItem.name} for ${storeItem.price} gold.`);
             }
