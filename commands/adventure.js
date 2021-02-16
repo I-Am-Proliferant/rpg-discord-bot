@@ -3,7 +3,7 @@ const utils = require('../lib/utils');
 
 module.exports = {
     name: 'adventure',
-    aliases: ['a'],
+    aliases: ['a','ad'],
     description: 'Starts an adventure by summoning an enemy. Adds user to the combat',
     args: false,
     usage: '',

@@ -1,7 +1,7 @@
 const utils = require('../lib/utils');
 module.exports = {
     name: 'attack',
-    aliases: ['aa'],
+    aliases: ['aa', 'at'],
     description: 'Attacks the current monster. Does nothing if out of combat.',
     args: false,
     usage: '',

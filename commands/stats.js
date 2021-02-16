@@ -24,10 +24,10 @@ module.exports = {
             statSheet.push("```css");
             statSheet.push(`Character name: ${player.name}`);
             statSheet.push(`Level: ${player.level}`);
-            statSheet.push(`Hp: ${player.hp}/${player.hpMax} [+${player.equipmentStats.hpMax}]`);
-            statSheet.push(`Attack: ${player.power} [+${player.equipmentStats.power}]`);
-            statSheet.push(`Defense: ${player.defense} [+${player.equipmentStats.defense}]`);
-            statSheet.push(`Speed: ${player.speed} [+${player.equipmentStats.speed}]`);
+            statSheet.push(`Hp: ${player.hp}/${player.totalStats.hpMax} (${player.baseStats.hpMax}) [+${player.equipmentStats.hpMax}]`);
+            statSheet.push(`Attack: ${player.totalStats.power} (${player.baseStats.power}) [+${player.equipmentStats.power}]`);
+            statSheet.push(`Defense: ${player.totalStats.defense} (${player.baseStats.defense}) [+${player.equipmentStats.defense}]`);
+            statSheet.push(`Speed: ${player.totalStats.speed} (${player.baseStats.speed}) [+${player.equipmentStats.speed}]`);
             statSheet.push(`Experience: ${player.exp}/${player.expNeeded}`);
             statSheet.push(`Gold: ${player.gold}`);
             statSheet.push(`-----------------------`);
