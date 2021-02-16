@@ -21,6 +21,8 @@ module.exports = {
             const left = player.getEquipment('left');
             const armor = player.getEquipment('armor');
             const ring = player.getEquipment('ring');
+
+
             statSheet.push("```css");
             statSheet.push(`Character name: ${player.name}`);
             statSheet.push(`Level: ${player.level}`);
@@ -31,10 +33,22 @@ module.exports = {
             statSheet.push(`Experience: ${player.exp}/${player.expNeeded}`);
             statSheet.push(`Gold: ${player.gold}`);
             statSheet.push(`-----------------------`);
-            statSheet.push(`Right Hand: ${right.name}`);
-            statSheet.push(`Left Hand: ${left.name}`);
-            statSheet.push(`Armor: ${armor.name}`);
-            statSheet.push(`Ring: ${ring.name}`);
+            const equipmentType = ['right', 'left', 'armor', 'ring'];
+            equipmentType.forEach(eType => {
+                const equipped = player.getEquipment(eType);
+                let itemInfo = `[${equipped.type}] ${equipped.name}:`;
+                //... TODO This is not an array, it's an object. Fix it
+                if(equipped.stats.hpMax) itemInfo += ` [Max Hp +${equipped.stats.hpMax}] `;
+                if(equipped.stats.power) itemInfo += ` [Power +${equipped.stats.power}] `;
+                if(equipped.stats.defense) itemInfo += ` [Defense +${equipped.stats.defense}] `;
+                if(equipped.stats.speed) itemInfo += ` [Speed +${equipped.stats.speed}] `;
+                statSheet.push(itemInfo);
+            });
+
+            // statSheet.push(`Right Hand: ${right.name}`);
+            // statSheet.push(`Left Hand: ${left.name}`);
+            // statSheet.push(`Armor: ${armor.name}`);
+            // statSheet.push(`Ring: ${ring.name}`);
             statSheet.push(`-----------------------`);
             statSheet.push(player.showInventory());
             statSheet.push("```");

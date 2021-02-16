@@ -3,6 +3,7 @@ module.exports = [
     {name:'sword', type:'right', description:'Common sword', target: ['enemy'], effects: ['damage'], range:{}, stats:{ 'power': 2 }, value: 500, requirements:[{name:'level',value:1}]},
     {name:'longSword', type:'right', description:'Common sword', target: ['enemy'], effects: ['damage'], range:{}, stats:{ 'power': 3 }, value: 750, requirements:[{name:'level',value:1}]},
     {name:'greatSword', type:'2hand', description:'Common two-handed sword', target: ['enemy'], effects: ['damage'], range:{}, stats:{ 'power': 5 }, value: 750, requirements:[{name:'level',value:3}]},
+    {name:'bigClub', type:'2hand', description:'Small tree', target: ['enemy'], effects: ['damage'], range:{}, stats:{ 'power': 4 }, value: 750, requirements:[{name:'level',value:1}]},
     {name:'shield', type:'left', description:'Common shield', target: [], effects: [], range:{}, stats:{ 'defense': 1 }, value: 250, requirements:[{name:'level',value:1}]},
     {name:'buckler', type:'left', description:'Common buckler', target: [], effects: [], range:{}, stats:{ 'defense': 3 }, value: 450, requirements:[{name:'level',value:1}]},
     {name:'leather', type:'armor', description:'Common leather armor', target: [], effects: [], range:{}, stats:{ 'defense': 2, 'hpMax':5 }, value: 750, requirements:[{name:'level',value:1}]},
