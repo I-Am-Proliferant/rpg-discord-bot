@@ -27,6 +27,15 @@ module.exports = {
             return;
         }
 
+        const inCombat = (game.combat.find(({ name }) => name === userName) || false);
+        if (inCombat) {
+            dialog.push(`You can't do this while in combat.`);
+            if(dialog.length) {
+                utils.sendMessage(message.channel,dialog.join('\n'));
+            }
+            return;
+        }
+
         if (!args[0]) {
             if(!game.store[0]) {
                 dialog.push(`Whoops. Looks like I'm all out of items for the day. Try again tomorrow.`);
@@ -49,7 +58,9 @@ module.exports = {
                 player.gold -= storeItem.price;
                 player.addToInventory(storeItem);
                 //... Add option to buy in bulk
+                dialog.push(`Before quantity ${storeItem.quantity}`);
                 storeItem.quantity--;
+                dialog.push(`After quantity ${storeItem.quantity}`);
                 if (storeItem.quantity <= 0) {
                     game.store.splice(game.store.indexOf(storeItem), 1);
                 }

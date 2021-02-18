@@ -31,9 +31,6 @@ module.exports = {
             }
             return;
         }
-        else {
-            game.combat.push(player);
-        }
 
         if (player.hp >= player.hpMax) {
             dialog.push(`You are currently at full health.`);
