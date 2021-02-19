@@ -17,33 +17,45 @@ client.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.name, command);
+    const command = require(`./commands/${file}`);
+    client.commands.set(command.name, command);
 }
+
+
+
 
 client.once('ready', () => {
     console.log('Ready!');
     client.user.setUsername('The Dungeon Master');
-    
+
 });
 
 client.on('message', message => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
+    let args = [];
+    const quoteSeparatedArgs = message.content.slice(prefix.length).trim().split(/(\x22[^\x22]*\x22)/).filter(x => x);
+    quoteSeparatedArgs.forEach(arg => {
+        if (arg.match('\x22')) {
+            args.push(arg.replace(/\x22/g, ''));
+        } else {
+            args = args.concat(arg.trim().split(' '));
+        }
+    });
 
-	const args = message.content.slice(prefix.length).trim().split(/ +/);
+    // const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift().toLowerCase();
-    
-    const command = client.commands.get(commandName) ||
-                    client.commands.find(cmd => cmd.aliases.includes(commandName));
 
-    if(command === 'botavatar') {
+    const command = client.commands.get(commandName) ||
+        client.commands.find(cmd => cmd.aliases.includes(commandName));
+
+    if (command === 'botavatar') {
         client.user.setAvatar('./assets/bot-avatar.png')
             .then(user => console.log(`New avatar set!`))
             .catch(console.error);
     };
 
     if (!command) return;
-    
+
     if (command.guildOnly && message.channel.type === 'dm') {
         return message.reply('I can\'t execute that command inside DMs!');
     }
@@ -86,13 +98,13 @@ client.on('message', message => {
     timestamps.set(message.author.id, now);
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
-	try {
-		command.execute(message, args, game);
-	} catch (error) {
-		console.error(error);
-		message.reply('there was an error trying to execute that command!');
-		message.reply(error);
-	}
+    try {
+        command.execute(message, args, game);
+    } catch (error) {
+        console.error(error);
+        message.reply('there was an error trying to execute that command!');
+        message.reply(error);
+    }
 });
 
 client.login(token);

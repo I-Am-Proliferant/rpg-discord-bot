@@ -4,7 +4,7 @@ const utils = require('../lib/utils');
 //... This might turn into !use once base item class is setup
 module.exports = {
     name: 'read',
-    aliases: ['scroll'],
+    aliases: ['scroll', 'use'],
     description: 'Trys to cast a spell from a scroll consuming the scroll in the process.',
     args: true,
     usage: '',

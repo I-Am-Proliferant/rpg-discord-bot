@@ -1,11 +1,11 @@
 const utils = require('../lib/utils');
 
 module.exports = {
-    name: 'info',
-    aliases: ['?', 'desc', 'description'],
-    description: 'Shows information about an item.',
+    name: 'sell',
+    aliases: ['$'],
+    description: 'Sells and item for 50% of the value.',
     args: true,
-    usage: '!info <<item name>>',
+    usage: '!sell <<item name>>',
     guildOnly: false,
     cooldown: 1,
     execute(message, args, game) {
@@ -14,7 +14,6 @@ module.exports = {
         if (!userName) {
             return;
         }
-
         const player = game.getPlayer(userName);
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
@@ -22,14 +21,20 @@ module.exports = {
             return;
         }
 
-        const item = player.getFromInventory(args[0],false);
+        const item = player.getFromInventory(args[0],true);
+
         if (!item) {
             dialog.push(`Can't find the item '${args[0]}' in your inventory.`)
             utils.sendMessage(message.channel,dialog.join('\n'));
             return;
         }
 
-        dialog.push(item.description);
+        //... check for equiped items
+        //... let you sell in bulk
+        const sellPrice = Math.floor(item.value * .5);
+        player.gold += sellPrice;
+        dialog.push(`${item.name} sold for ${sellPrice} gold.`);
+
         if(dialog.length) {
             utils.sendMessage(message.channel,dialog.join('\n'));
         }
