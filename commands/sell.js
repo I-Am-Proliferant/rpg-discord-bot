@@ -3,9 +3,9 @@ const utils = require('../lib/utils');
 module.exports = {
     name: 'sell',
     aliases: ['$'],
-    description: 'Sells and item for 50% of the value.',
+    description: 'Sells an item for 50% of the value.',
     args: true,
-    usage: '!sell <<item name>>',
+    usage: '"item name"',
     guildOnly: false,
     cooldown: 1,
     execute(message, args, game) {

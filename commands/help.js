@@ -1,7 +1,7 @@
 const { prefix } = require('../config.json');
 module.exports = {
     name: 'help',
-    description: 'List all of my commands or infor about a specific command',
+    description: 'List all of my commands or info about a specific command',
     aliases: ['commands'],
     usage: '[command name]',
     cooldown: 2,
@@ -31,7 +31,7 @@ module.exports = {
         const command = commands.get(name) || commands.find(c => c.aliases && c.aliases.includes(name));
 
         if (!command) {
-            return message.reply('that\'s nt a valid command!');
+            return message.reply('that\'s not a valid command!');
         }
 
         data.push(`**Name:** ${command.name}`);

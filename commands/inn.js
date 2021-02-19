@@ -3,7 +3,7 @@ const utils = require('../lib/utils');
 
 module.exports = {
     name: 'inn',
-    aliases: ['inn', 'tavern'],
+    aliases: ['tavern'],
     description: 'Rest in the Gorgon\'s Kiss to regain your health and abilities in real time.',
     args: false,
     usage: '',
@@ -45,7 +45,7 @@ module.exports = {
             dialog.push(player.heal(randomRange(player.totalStats.hpMax, player.totalStats.hpMax / 3)));
         }
         else {
-            dialog.push(`Come back when you have atleast ${innPrice} gold.`);
+            dialog.push(`Come back when you have at least ${innPrice} gold.`);
         }
         if(dialog.length) {
             utils.sendMessage(message.channel,dialog.join('\n'));

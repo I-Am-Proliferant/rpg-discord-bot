@@ -3,7 +3,7 @@ const utils = require('../lib/utils');
 module.exports = {
     name: 'store',
     aliases: ['buy', 'shop'],
-    description: 'Purchase from the ever popular general store',
+    description: 'Purchase items from the ever popular General Store',
     args: false,
     usage: '',
     guildOnly: false,

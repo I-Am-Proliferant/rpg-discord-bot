@@ -5,7 +5,7 @@ module.exports = {
     aliases: ['?', 'desc', 'description'],
     description: 'Shows information about an item.',
     args: true,
-    usage: '!info <<item name>>',
+    usage: '<<item name>>',
     guildOnly: false,
     cooldown: 1,
     execute(message, args, game) {
