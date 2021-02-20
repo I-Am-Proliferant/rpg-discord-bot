@@ -6,8 +6,6 @@ const cooldowns = new Discord.Collection();
 const Player = require('./lib/player.js');
 const Game = require('./lib/game.js');
 
-// const test = new player.Player('tester');
-// game.players.push(test);
 const game = new Game.Game();
 const player = new Player.Player();
 
@@ -20,9 +18,6 @@ for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
     client.commands.set(command.name, command);
 }
-
-
-
 
 client.once('ready', () => {
     console.log('Ready!');
@@ -42,17 +37,11 @@ client.on('message', message => {
         }
     });
 
-    // const args = message.content.slice(prefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
+    const commandNameRaw = args.shift();
+    const commandName = commandNameRaw ? commandNameRaw.toLowerCase() : 'none';
 
     const command = client.commands.get(commandName) ||
         client.commands.find(cmd => cmd.aliases.includes(commandName));
-
-    if (command === 'botavatar') {
-        client.user.setAvatar('./assets/bot-avatar.png')
-            .then(user => console.log(`New avatar set!`))
-            .catch(console.error);
-    };
 
     if (!command) return;
 
@@ -64,7 +53,6 @@ client.on('message', message => {
         const authorPerms = message.channel.permissionsFor(message.author);
         if (!authorPerms || !authorPerms.has(command.permissions)) {
             return message.reply('You can not do this!');
-
         }
     }
 

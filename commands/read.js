@@ -13,6 +13,8 @@ module.exports = {
     execute(message, args, game) {
         const dialog = [];
         const userName = message.author.username;
+        const inCombat = (game.turn.isCombat && game.enemy)
+
         if (!userName) {
             return;
         }
@@ -29,7 +31,7 @@ module.exports = {
             utils.sendMessage(message.channel,dialog.join('\n'));
             return;
         }
-        
+
         //... if (player.isTurn)
         if (!game.enemy || game.turn.userName === userName) {
             const scroll = player.getFromInventory(args[0],false);
@@ -49,7 +51,12 @@ module.exports = {
                 target = game.enemy;
             }
             else if (scroll.target.find(e => e === 'player')) {
-                target = (game.getPlayer(args[1])) ? game.getPlayer(args[1]) : player;
+                if (args[1]) {
+                    target = game.getPlayer(args[1]);
+                }
+                else {
+                    target = player;
+                }
             }
             else {
                 target = player;
@@ -63,6 +70,7 @@ module.exports = {
                     }
                     else {
                         dialog.push(target.heal(amount));
+                        player.aggro += amount * 2;
                         effect.uses--;
                     }
                     if (effect.uses <= 0) {
@@ -71,15 +79,23 @@ module.exports = {
                     }
                 }
                 else if (effect.name === 'burn' && effect.uses > 0) {
-                    dialog.push(`A mote of flame burns ${target.name} for ${amount} damage.`);
-                    dialog.push(target.damage(amount));
-                    effect.uses--;
-                    if (effect.uses <= 0) {
-                        effect.uses = effect.usesMax;
-                        player.getFromInventory(scroll.name);
+                    if (!inCombat) {
+                        dialog.push(`You need to be in combat to use this.`);
                     }
-                    //... TODO: Need to fix turn handling for scrolls.
-                    dialog.push(game.updateCombat());
+                    else {
+                        dialog.push('```css');
+                        dialog.push(`A mote of flame burns ${target.name} for ${amount} damage.`);
+                        dialog.push('```');
+                        dialog.push(target.damage(amount));
+                        player.aggro += amount * 10;
+                        effect.uses--;
+                        if (effect.uses <= 0) {
+                            effect.uses = effect.usesMax;
+                            player.getFromInventory(scroll.name);
+                        }
+                        //... TODO: Need to fix turn handling for scrolls.
+                        dialog.push(game.updateCombat());
+                    }
                 }
             });
 
