@@ -16,7 +16,7 @@ module.exports = {
         if (args[0] === 'list') {
             const combatList = []
             game.combat.forEach(function(player) {
-                const info = `${player.name}: ${player.hp}/${player.totalStats.hpMax} #${player.totalStats.speed} ${player.dead}`;
+                const info = `${player.name} Health: ${player.hp}/${player.totalStats.hpMax} Speed: ${player.totalStats.speed} Aggro: ${player.aggro}`;
                 combatList.push(info);
             });
             utils.sendMessage(message.channel,combatList);

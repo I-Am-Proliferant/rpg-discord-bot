@@ -6,7 +6,7 @@ module.exports = {
     aliases: ['sim'],
     description: 'Simulate different features for development and balance',
     args: true,
-    usage: '<user/monster name>',
+    usage: '"User Name"',
     guildOnly: 'ADMIN',
     cooldown: 5,
     execute(message, args, game) {
