@@ -32,13 +32,13 @@ module.exports = {
             return;
         }
 
-        if (player.hp >= player.hpMax) {
-            dialog.push(`You are currently at full health.`);
-            if(dialog.length) {
-                utils.sendMessage(message.channel,dialog.join('\n'));
-            }
-            return;
-        }
+        // if (player.hp >= player.hpMax) {
+        //     dialog.push(`You are currently at full health.`);
+        //     if(dialog.length) {
+        //         utils.sendMessage(message.channel,dialog.join('\n'));
+        //     }
+        //     return;
+        // }
 
         if (player.gold >= innPrice) {
             player.gold -= innPrice;

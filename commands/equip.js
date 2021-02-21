@@ -21,6 +21,15 @@ module.exports = {
             return;
         }
 
+        const inCombat = (game.combat.find(({ name }) => name === userName) || false);
+        if (inCombat) {
+            dialog.push(`You can't do this while in combat.`);
+            if(dialog.length) {
+                utils.sendMessage(message.channel,dialog.join('\n'));
+            }
+            return;
+        }
+
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
             utils.sendMessage(message.channel,dialog.join('\n'));

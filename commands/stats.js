@@ -27,7 +27,6 @@ module.exports = {
             statSheet.push(`Speed: ${player.totalStats.speed} (${player.baseStats.speed}) [${player.equipmentStats.speed}]`);
             statSheet.push(`Experience: ${player.exp}/${player.expNeeded}`);
             statSheet.push(`Gold: ${player.gold}`);
-            statSheet.push(`-----------------------`);
             statSheet.push(`-------Equipment-------`);
             const equipmentType = ['2-Handed', 'Main Hand', 'Off Hand', 'Armor', 'Ring'];
             equipmentType.forEach(eType => {
@@ -42,7 +41,6 @@ module.exports = {
                 }
             });
             if (player.bonus && player.bonus[0]) {
-                statSheet.push(`-----------------------`);
                 statSheet.push(`--------Bonuses--------`);
 
                 player.bonus.forEach( b => {
@@ -53,7 +51,6 @@ module.exports = {
                 );
             }
             if (player.abilities && player.abilities[0]) {
-                statSheet.push(`-----------------------`);
                 statSheet.push(`-------Abilities-------`);
 
                 player.abilities.forEach(ability => {
@@ -66,7 +63,6 @@ module.exports = {
                 );
             }
             if (player.effects && player.effects[0]) {
-                statSheet.push(`-----------------------`);
                 statSheet.push(`--------Effects--------`);
 
                 player.effects.forEach(effect => {
@@ -76,7 +72,6 @@ module.exports = {
                 }
                 );
             }
-            statSheet.push(`-----------------------`);
             statSheet.push(`-------Inventory-------`);
             statSheet.push(player.showInventory());
             statSheet.push("```");
