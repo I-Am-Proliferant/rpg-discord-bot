@@ -28,6 +28,7 @@ module.exports = {
             statSheet.push(`Experience: ${player.exp}/${player.expNeeded}`);
             statSheet.push(`Gold: ${player.gold}`);
             statSheet.push(`-----------------------`);
+            statSheet.push(`-------Equipment-------`);
             const equipmentType = ['2-Handed', 'Main Hand', 'Off Hand', 'Armor', 'Ring'];
             equipmentType.forEach(eType => {
                 const equipped = player.getEquipment(eType);
@@ -40,8 +41,21 @@ module.exports = {
                     statSheet.push(itemInfo);
                 }
             });
+            if (player.bonus && player.bonus[0]) {
+                statSheet.push(`-----------------------`);
+                statSheet.push(`--------Bonuses--------`);
+
+                player.bonus.forEach( b => {
+                    let bonusInfo = `${b.name}: `;
+                        bonusInfo += `[${b.amount} for ${b.duration - game.turn.round} rounds] `;
+                    statSheet.push(bonusInfo);
+                }
+                );
+            }
             if (player.abilities && player.abilities[0]) {
                 statSheet.push(`-----------------------`);
+                statSheet.push(`-------Abilities-------`);
+
                 player.abilities.forEach(ability => {
                     let abilityInfo = `${ability.name}: `;
                     ability.effects.forEach(e => {
@@ -53,6 +67,8 @@ module.exports = {
             }
             if (player.effects && player.effects[0]) {
                 statSheet.push(`-----------------------`);
+                statSheet.push(`--------Effects--------`);
+
                 player.effects.forEach(effect => {
                     let effectInfo = `${effect.name}: `;
                     if(effect.valueType && effect.value) effectInfo += ` [${effect.value}${effect.valueType === 'percent' ? '%' : ''}] `;
@@ -61,6 +77,7 @@ module.exports = {
                 );
             }
             statSheet.push(`-----------------------`);
+            statSheet.push(`-------Inventory-------`);
             statSheet.push(player.showInventory());
             statSheet.push("```");
             utils.sendMessage(message.channel, statSheet);

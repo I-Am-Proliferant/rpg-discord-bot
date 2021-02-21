@@ -21,14 +21,14 @@ module.exports = {
         const player = game.getPlayer(userName);
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
-            if(dialog.length) {
-                utils.sendMessage(message.channel,dialog.join('\n'));
+            if (dialog.length) {
+                utils.sendMessage(message.channel, dialog.join('\n'));
             }
             return;
         }
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-            utils.sendMessage(message.channel,dialog.join('\n'));
+            utils.sendMessage(message.channel, dialog.join('\n'));
             return;
         }
 
@@ -39,16 +39,16 @@ module.exports = {
 
             if (!ability) {
                 dialog.push(`You don't know this ability.`)
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                utils.sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
             if (!ability.target[0]) {
                 dialog.push('This ability doesn\'t have a target.')
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                utils.sendMessage(message.channel, dialog.join('\n'));
                 return
             }
             if (ability.target.find(e => e === 'enemy')) {
-                target = game.enemy;
+                target = [game.enemy];
             }
             else if (ability.target.find(e => e === 'all players')) {
                 target = game.getAllPlayers();
@@ -65,13 +65,13 @@ module.exports = {
                 target = [player];
             }
 
-            const amount = randomRange( ability.range.max, ability.range.min );
-            ability.effects.forEach( effect => {
-                if ( effect.uses <= 0 ) {
-                    dialog.push( `You must rest at the !inn before you can use ${effect.name} again.` );
+            const amount = randomRange(ability.range.max, ability.range.min);
+            ability.effects.forEach(effect => {
+                if (effect.uses <= 0) {
+                    dialog.push(`You must rest at the !inn before you can use ${effect.name} again.`);
                 }
-                else if ( effect.name === 'heal' ) {
-                    for(i = 0; i < target.length; i++) {
+                else if (effect.name === 'heal') {
+                    for (i = 0; i < target.length; i++) {
                         if (target[i].hp >= target[i].totalStats.hpMax) {
                             dialog.push(`${target[i].name} is already at full health.`);
                         }
@@ -82,22 +82,23 @@ module.exports = {
                     player.aggro += amount * 2;
                     effect.uses--;
                 }
-                else if ( effect.name === 'burn' ) {
+                else if (effect.name === 'burn') {
                     if (!inCombat) {
                         dialog.push(`You need to be in combat to use this.`);
                     }
                     else {
-                        dialog.push('```css');
-                        dialog.push(`A mote of flame burns ${target.name} for ${amount} damage.`);
-                        dialog.push('```');
-                        dialog.push(target.damage(amount));
+                        for (i = 0; i < target.length; i++) {
+                            dialog.push('```css');
+                            dialog.push(`A mote of flame burns ${target[i].name} for ${amount} damage.`);
+                            dialog.push('```');
+                            dialog.push(target[i].damage(amount));
+                        }
                         player.aggro += amount * 7;
                         effect.uses--;
-                        //... TODO: Need to fix turn handling for scrolls.
                         dialog.push(game.updateCombat());
                     }
                 }
-                else if ( effect.name === 'taunt' ) {
+                else if (effect.name === 'taunt') {
                     if (!inCombat) {
                         dialog.push(`You need to be in combat to use this.`);
                     }
@@ -108,49 +109,62 @@ module.exports = {
                         dialog.push('```');
                         player.aggro += aggroAmount;
                         effect.uses--;
-                        //... TODO: Need to fix turn handling for scrolls.
                         dialog.push(game.updateCombat());
                     }
                 }
-                else if ( effect.name === 'buff' ) {
+                else if (effect.name === 'buff') {
                     if (!inCombat) {
                         dialog.push(`You need to be in combat to use this.`);
                     }
                     else {
-                        // find stats
-                        // buff target stats
-                        // make duration matter
-                        const aggroAmount = amount * 14;
-                        dialog.push('```css');
-                        dialog.push(`${player.name} tries to draw ${target[0].name}'s attention! (+${aggroAmount} aggro).`);
-                        dialog.push('```');
-                        player.aggro += aggroAmount;
-                        effect.uses--;
-                        //... TODO: Need to fix turn handling for scrolls.
-                        dialog.push(game.updateCombat());
+                        if (effect.stats && effect.stats[0]) {
+                            const duration = effect.duration + game.turn.round;
+                            effect.stats.forEach(stat => {
+                                for (i = 0; i < target.length; i++) {
+                                    target[i].bonus.push({ name: stat.name, amount: amount, duration: duration });
+                                    target[i].calcStats();
+                                    dialog.push('```css');
+                                    dialog.push(`${player.name} increases ${target[0].name}'s ${stat.name} by ${amount} for ${effect.duration} rounds.`);
+                                    dialog.push('```');
+                                }
+                            })
+                            effect.uses--;
+                            dialog.push(game.updateCombat());
+                        }
+                        else {
+                            dialog.push(`There seems to be something wrong with this ability.`);
+                        }
                     }
                 }
-                else if ( effect.name === 'curse' ) {
+                else if (effect.name === 'curse') {
                     if (!inCombat) {
                         dialog.push(`You need to be in combat to use this.`);
                     }
                     else {
-                        const aggroAmount = amount * 14;
-                        dialog.push('```css');
-                        dialog.push(`${player.name} tries to draw ${target[0].name}'s attention! (+${aggroAmount} aggro).`);
-                        dialog.push('```');
-                        player.aggro += aggroAmount;
-                        effect.uses--;
-                        //... TODO: Need to fix turn handling for scrolls.
-                        dialog.push(game.updateCombat());
+                        if (effect.stats && effect.stats[0]) {
+                            const duration = effect.duration + game.turn.round;
+                            effect.stats.forEach(stat => {
+                                for (i = 0; i < target.length; i++) {
+                                    target[i].bonus.push({ name: stat.name, amount: -amount, duration: duration });
+                                    target[i].calcStats();
+                                    dialog.push('```css');
+                                    dialog.push(`${player.name} decreases ${target[0].name}'s ${stat.name} by ${amount} for ${effect.duration} rounds.`);
+                                    dialog.push('```');
+                                }
+                            })
+                            effect.uses--;
+                            dialog.push(game.updateCombat());
+                        }
+                        else {
+                            dialog.push(`There seems to be something wrong with this ability.`);
+                        }
                     }
                 }
             });
 
-
         }
-        if(dialog.length) {
-            utils.sendMessage(message.channel,dialog.join('\n'));
+        if (dialog.length) {
+            utils.sendMessage(message.channel, dialog.join('\n'));
         }
     }
 };
