@@ -14,7 +14,8 @@ module.exports = {
         if (!userName) {
             return;
         }
-        const player = game.getPlayer(userName);
+
+        const player = game.getPlayer(userName) || game.getEnemyByName(userName);
         if (player) {
             const statSheet = [];
             statSheet.push("```css");
@@ -43,6 +44,9 @@ module.exports = {
                 statSheet.push(`-----------------------`);
                 player.abilities.forEach(ability => {
                     let abilityInfo = `${ability.name}: `;
+                    ability.effects.forEach(e => {
+                        abilityInfo += ` [${e.name}: ${e.uses}/${e.usesMax}] `;
+                    })
                     statSheet.push(abilityInfo);
                 }
                 );

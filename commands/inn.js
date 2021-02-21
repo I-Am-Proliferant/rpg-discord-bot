@@ -42,7 +42,17 @@ module.exports = {
 
         if (player.gold >= innPrice) {
             player.gold -= innPrice;
-            dialog.push(player.heal(randomRange(player.totalStats.hpMax, player.totalStats.hpMax / 3)));
+
+            if (player.abilities && player.abilities[0]) {
+                player.abilities.forEach(ability => {
+                    ability.effects.forEach(effect => {
+                        effect.uses = effect.usesMax;
+                    })
+                })
+            }
+
+            const healAmount = randomRange(player.totalStats.hpMax, player.totalStats.hpMax / 3);
+            dialog.push(player.heal(healAmount));
         }
         else {
             dialog.push(`Come back when you have at least ${innPrice} gold.`);

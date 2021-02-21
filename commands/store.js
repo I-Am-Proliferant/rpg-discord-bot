@@ -47,7 +47,7 @@ module.exports = {
             })
         }
         else {
-            const storeItem = game.store.find(e => e.name === args[0]);
+            const storeItem = game.store.find(e => e.name.toUpperCase().includes(args[0].toUpperCase()));
             if (!storeItem) {
                 dialog.push(`Doesn't look like I have that item in stock.`);
                 utils.sendMessage(message.channel,dialog.join('\n'));

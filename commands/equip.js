@@ -2,7 +2,7 @@ const utils = require('../lib/utils');
 
 module.exports = {
     name: 'equip',
-    aliases: ['wear', 'eq'],
+    aliases: ['wear', 'eq', 'e'],
     description: 'Equips items from your inventory.',
     args: true,
     usage: '',

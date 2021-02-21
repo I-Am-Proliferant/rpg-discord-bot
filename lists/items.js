@@ -4,13 +4,16 @@ module.exports = [
     
     {name:'Wand of Everything', type:'Main Hand', description:'Common sword', target: ['enemy'], 
     abilities: [
-        {name:'Heal', type:'Ability', description: `Heals player for 10 - 20 hp`, target: ['self','player'], effects: [{ name: 'heal', uses: 5, usesMax: 5 }], range: { min: 10, max: 20 }},
-        {name:'AOE Heal', type:'Ability', description: `Heals all players for 10 - 20 hp`, target: ['all players'], effects: [{ name: 'heal', uses: 5, usesMax: 5 }], range: { min: 10, max: 20 }},
-        {name:'Burn', type:'Ability', description: `Burns enemy for 10 - 20 damage`, target: ['enemy'], effects: [{ name: 'burn', uses: 5, usesMax: 5 }], range: { min: 10, max: 20 }},
-        {name:'Taunt', type:'Ability', description: `Generates a burst of aggro`, target: ['self'], effects: [{ name: 'heal', uses: 5, usesMax: 5 }], range: { min: 25, max: 50 }},
+        {name:'Heal', type:'Ability', description: `Heals player for 10 - 20 hp`, target: ['self','player'], effects: [{ name: 'heal', uses: 5, usesMax: 5, duration: 0 }], range: { min: 10, max: 20 }},
+        {name:'AOE Heal', type:'Ability', description: `Heals all players for 10 - 20 hp`, target: ['all players'], effects: [{ name: 'heal', uses: 1, usesMax: 1, duration: 0 }], range: { min: 10, max: 20 }},
+        {name:'Burn', type:'Ability', description: `Burns enemy for 10 - 20 damage`, target: ['enemy'], effects: [{ name: 'burn', uses: 5, usesMax: 5, duration: 0 }], range: { min: 10, max: 20 }},
+        {name:'Haste', type:'Ability', description: `Increases targets speed.`, target: ['self', 'player'], effects: [{ name: 'buff', uses: 5, usesMax: 5, duration: 3, stats: [{name: 'speed' }] }], range: { min: 3, max: 7 }},
+        {name:'Slow', type:'Ability', description: `Decreases targets speed.`, target: ['enemy'], effects: [{ name: 'curse', uses: 5, usesMax: 5, duration: 3, stats: [{name: 'speed'}] }], range: { min: 3, max: 7 }},
+        {name:'Strength', type:'Ability', description: `Increases targets power`, target: ['self', 'player'], effects: [{ name: 'buff', uses: 5, usesMax: 5, duration: 3, stats: [{name: 'power'}] }], range: { min: 3, max: 7 }},
+        {name:'Taunt', type:'Ability', description: `Generates a burst of aggro`, target: ['self'], effects: [{ name: 'taunt', uses: 5, usesMax: 5, duration: 0 }], range: { min: 5, max: 10 }},
     ],
     effects: [
-        {name:'Regeneration',valueType: 'static', value:1, description:'Health gained every turn'},
+        {name:'Regeneration',valueType: 'static', value:5, description:'Health gained every turn'},
         {name:'Life Steal',valueType: 'percent', value:25, description:'Damage returned as health'},
         {name:'Damage Mitigation',valueType: 'percent', value:25, description:'A significant boost to aggro'},
         {name:'Multi Attack',value:1,description:'Additional strikes when the attack action is used.'},
