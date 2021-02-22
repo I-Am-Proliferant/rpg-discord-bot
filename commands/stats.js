@@ -28,7 +28,7 @@ module.exports = {
             statSheet.push(`Experience: ${player.exp}/${player.expNeeded}`);
             statSheet.push(`Gold: ${player.gold}`);
             statSheet.push(`-------Equipment-------`);
-            const equipmentType = ['2-Handed', 'Main Hand', 'Off Hand', 'Armor', 'Ring', 'Class'];
+            const equipmentType = ['2 Handed', 'Main Hand', 'Off Hand', 'Armor', 'Ring', 'Class'];
             equipmentType.forEach(eType => {
                 const equipped = player.getEquipment(eType);
                 if (equipped.name !== 'none') {

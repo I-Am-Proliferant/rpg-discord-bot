@@ -48,7 +48,6 @@ module.exports = {
                 return
             }
 
-            target = [player];
             if (ability.target.find(e => e === 'enemy')) {
                 target = [game.enemy];
             }
@@ -58,7 +57,20 @@ module.exports = {
             else if (ability.target.find(e => e === 'player')) {
                 if (args[1]) {
                     target = [game.getPlayer(args[1])];
+                    if (target.name === userName) target = false;
                 }
+            }
+
+
+            if (!target && ability.target.find(e => e === 'self')) {
+                target = [player];
+            }
+
+
+            if (!target && !target[0]) {
+                dialog.push('This ability doesn\'t have a target.')
+                utils.sendMessage(message.channel, dialog.join('\n'));
+                return
             }
 
             let amount = 1;
@@ -81,6 +93,19 @@ module.exports = {
                             }
                             else {
                                 dialog.push(target[i].heal(amount));
+                            }
+                        }
+                        player.aggro += amount * 2;
+                        effect.uses--;
+                    }
+                    else if (effect.name === 'blood heal') {
+                        for (i = 0; i < target.length; i++) {
+                            if (target[i].hp >= target[i].totalStats.hpMax) {
+                                dialog.push(`${target[i].name} is already at full health.`);
+                            }
+                            else {
+                                dialog.push(target[i].heal( amount ));
+                                dialog.push(player.damage( Math.floor( amount / 3 )));
                             }
                         }
                         player.aggro += amount * 2;
@@ -109,7 +134,7 @@ module.exports = {
                         else {
                             const aggroAmount = amount * 14;
                             dialog.push('```css');
-                            dialog.push(`${player.name} tries to draw ${target[0].name}'s attention! (+${aggroAmount} aggro).`);
+                            dialog.push(`${player.name} makes a big scene! (+${aggroAmount} aggro).`);
                             dialog.push('```');
                             player.aggro += aggroAmount;
                             effect.uses--;
@@ -163,6 +188,20 @@ module.exports = {
                                 dialog.push(`There seems to be something wrong with this ability.`);
                             }
                         }
+                    }
+                    else if (effect.name === 'summon') {
+                        if (!inCombat) {
+                            dialog.push(`You need to be in combat to use this.`);
+                        }
+
+                        //... need another arg specifying type of monster to summon and another for clay amount
+                        //... Have to specify how much clay you want to use where the cost per type is the minimum
+                        //... More clay ups the version and stats of the monster
+                        //... check for enough trophies of the monster type for it to be eligible
+                        //... Create the monster and assign control to the player
+                        //... Add the monster to game.summons[] for the duration
+                        //... Clean up summons when duration is over, player dies or combat ends
+
                     }
                 });
     
