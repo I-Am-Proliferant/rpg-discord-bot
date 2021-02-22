@@ -68,7 +68,7 @@ module.exports = {
 
 
             if (!target && !target[0]) {
-                dialog.push('This ability doesn\'t have a target.')
+                dialog.push('Please specify a valid target for this ability.')
                 utils.sendMessage(message.channel, dialog.join('\n'));
                 return
             }
