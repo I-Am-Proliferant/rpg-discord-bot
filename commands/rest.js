@@ -18,30 +18,30 @@ module.exports = {
         const player = game.getPlayer(userName);
 
         if (!player) {
-            sendMessage(message.channel,`You don't seem to exist. Maybe try the !init command?`);
+            sendMessage(message.channel, `You don't seem to exist. Maybe try the !init command?`);
             return;
         }
 
         const inCombat = (game.combat.find(({ name }) => name === userName) || false);
         if (inCombat) {
             dialog.push(`You can't do this while in combat.`);
-            if(dialog.length) {
-                sendMessage(message.channel,dialog.join('\n'));
+            if (dialog.length) {
+                sendMessage(message.channel, dialog.join('\n'));
             }
             return;
         }
 
         if (player.hp >= player.hpMax) {
             dialog.push(`You are currently at full health.`);
-            if(dialog.length) {
-                sendMessage(message.channel,dialog.join('\n'));
+            if (dialog.length) {
+                sendMessage(message.channel, dialog.join('\n'));
             }
             return;
         }
 
         dialog.push(player.heal(randomRange((player.level * 2) + 3, player.level)));
-        if(dialog.length) {
-            sendMessage(message.channel,dialog.join('\n'));
+        if (dialog.length) {
+            sendMessage(message.channel, dialog.join('\n'));
         }
     }
 };

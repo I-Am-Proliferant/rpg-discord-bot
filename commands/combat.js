@@ -10,19 +10,19 @@ module.exports = {
     cooldown: 2,
     execute(message, args, game) {
         if (!game.combat || !game.combat.length) {
-            sendMessage(message.channel,`There is currently no active combat`);
+            sendMessage(message.channel, `There is currently no active combat`);
             return;
         }
         if (args[0] === 'list') {
             const combatList = []
-            game.combat.forEach(function(player) {
+            game.combat.forEach(function (player) {
                 const info = `${player.name} Health: ${player.hp}/${player.totalStats.hpMax} Speed: ${player.totalStats.speed} Aggro: ${player.aggro}`;
                 combatList.push(info);
             });
-            sendMessage(message.channel,combatList);
+            sendMessage(message.channel, combatList);
         }
         else if (args[0] === 'skip') {
-            sendMessage(message.channel,game.updateCombat());
+            sendMessage(message.channel, game.updateCombat());
         }
     }
 };

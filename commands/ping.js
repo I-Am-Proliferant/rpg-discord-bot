@@ -1,6 +1,6 @@
 module.exports = {
     name: 'ping',
-    aliases: ['pp','pingpong'],
+    aliases: ['pp', 'pingpong'],
     description: 'Ping!',
     args: false,
     usage: '<user> <role>',

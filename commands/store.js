@@ -17,29 +17,29 @@ module.exports = {
         const player = game.getPlayer(userName);
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
-            sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel, dialog.join('\n'));
             return;
         }
 
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-            sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel, dialog.join('\n'));
             return;
         }
 
         const inCombat = (game.combat.find(({ name }) => name === userName) || false);
         if (inCombat) {
             dialog.push(`You can't do this while in combat.`);
-            if(dialog.length) {
-                sendMessage(message.channel,dialog.join('\n'));
+            if (dialog.length) {
+                sendMessage(message.channel, dialog.join('\n'));
             }
             return;
         }
 
         if (!args[0]) {
-            if(!game.store[0]) {
+            if (!game.store[0]) {
                 dialog.push(`Whoops. Looks like I'm all out of items for the day. Try again tomorrow.`);
-                sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
             dialog.push('```css');
@@ -53,7 +53,7 @@ module.exports = {
             const storeItem = game.store.find(e => e.name.toUpperCase().includes(args[0].toUpperCase()));
             if (!storeItem) {
                 dialog.push(`Doesn't look like I have that item in stock.`);
-                sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
 
@@ -73,8 +73,8 @@ module.exports = {
                 dialog.push(`You don't have enough gold.`);
             }
         }
-        if(dialog.length) {
-            sendMessage(message.channel,dialog.join('\n'));
+        if (dialog.length) {
+            sendMessage(message.channel, dialog.join('\n'));
         }
     }
 };

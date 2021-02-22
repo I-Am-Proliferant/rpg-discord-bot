@@ -7,7 +7,7 @@ module.exports = {
     args: false,
     usage: '"User Name"',
     guildOnly: false,
-    cooldown: 5,
+    cooldown: 2,
     execute(message, args, game) {
 
         const userName = (args[0] || message.author.username);
@@ -43,9 +43,9 @@ module.exports = {
             if (player.bonus && player.bonus[0]) {
                 statSheet.push(`--------Bonuses--------`);
 
-                player.bonus.forEach( b => {
+                player.bonus.forEach(b => {
                     let bonusInfo = `${b.name}: `;
-                        bonusInfo += `[${b.amount} for ${b.duration - game.turn.round} rounds] `;
+                    bonusInfo += `[${b.amount} for ${b.duration - game.turn.round} rounds] `;
                     statSheet.push(bonusInfo);
                 }
                 );
@@ -69,9 +69,9 @@ module.exports = {
 
                 player.effects.forEach(effect => {
                     let effectInfo = `${effect.name}: `;
-                    if(effect.valueType && effect.value) effectInfo += ` [${effect.value}${effect.valueType === 'percent' ? '%' : ''}] `;
-                    else if(effect.value) effectInfo += ` [${effect.value}] `;
-                    else if(effect.stats && effect.stats[0]) {
+                    if (effect.valueType && effect.value) effectInfo += ` [${effect.value}${effect.valueType === 'percent' ? '%' : ''}] `;
+                    else if (effect.value) effectInfo += ` [${effect.value}] `;
+                    else if (effect.stats && effect.stats[0]) {
                         effect.stats.forEach(e => {
                             effectInfo += ` [${e.name} ${e.value}${effect.valueType === 'percent' ? '%' : ''}] `;
                         })

@@ -3,7 +3,7 @@ const { sendMessage } = require('../lib/utils');
 
 module.exports = {
     name: 'adventure',
-    aliases: ['a','ad'],
+    aliases: ['a', 'ad'],
     description: 'Starts an adventure by summoning an enemy. Adds user to the combat',
     args: false,
     usage: '',
@@ -17,11 +17,11 @@ module.exports = {
         const dialog = [];
         const player = game.getPlayer(userName);
         if (!player) {
-            sendMessage(message.channel,`You don't seem to exist ${userName}. Maybe try the !init command?`);
+            sendMessage(message.channel, `You don't seem to exist ${userName}. Maybe try the !init command?`);
             return;
         }
         if (player.dead) {
-            sendMessage(message.channel,`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
+            sendMessage(message.channel, `I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
             return;
         }
 
@@ -49,8 +49,8 @@ module.exports = {
             return b.getSpeed() - a.getSpeed();
         });
 
-        if(dialog.length) {
-            sendMessage(message.channel,dialog.join('\n'));
+        if (dialog.length) {
+            sendMessage(message.channel, dialog.join('\n'));
         }
     }
 };

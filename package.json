@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "discord": "^0.8.2",
-    "discord.js": "^12.5.1",
     "discord.io": "^2.5.3",
+    "discord.js": "^12.5.1",
+    "eslint": "^7.20.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {},

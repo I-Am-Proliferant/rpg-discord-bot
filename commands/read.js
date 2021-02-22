@@ -21,30 +21,30 @@ module.exports = {
         const player = game.getPlayer(userName);
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
-            if(dialog.length) {
-                sendMessage(message.channel,dialog.join('\n'));
+            if (dialog.length) {
+                sendMessage(message.channel, dialog.join('\n'));
             }
             return;
         }
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-            sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel, dialog.join('\n'));
             return;
         }
 
         //... if (player.isTurn)
         if (!game.enemy || game.turn.userName === userName) {
-            const scroll = player.getFromInventory(args[0],false);
+            const scroll = player.getFromInventory(args[0], false);
             let target = false;
 
             if (!scroll) {
                 dialog.push(`Can't find the scroll '${args[0]}' in your inventory.`)
-                sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
             if (!scroll.target[0]) {
                 dialog.push('This scroll doesn\'t have a target.')
-                sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel, dialog.join('\n'));
                 return
             }
             if (scroll.target.find(e => e === 'enemy')) {
@@ -62,7 +62,7 @@ module.exports = {
                 target = player;
             }
 
-            const amount = randomRange(scroll.range.max,scroll.range.min);
+            const amount = randomRange(scroll.range.max, scroll.range.min);
             scroll.effects.forEach(effect => {
                 if (effect.name === 'heal' && effect.uses > 0) {
                     if (target.hp >= target.totalStats.hpMax) {
@@ -101,8 +101,8 @@ module.exports = {
 
 
         }
-        if(dialog.length) {
-            sendMessage(message.channel,dialog.join('\n'));
+        if (dialog.length) {
+            sendMessage(message.channel, dialog.join('\n'));
         }
     }
 };

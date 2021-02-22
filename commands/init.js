@@ -14,12 +14,12 @@ module.exports = {
         const player = game.getPlayer(userName);
         // const inGame = ( false );
         if (player) {
-            sendMessage(message.channel,`You're already part of the game ${userName}`);
+            sendMessage(message.channel, `You're already part of the game ${userName}`);
         }
         else {
             const newPlayer = new Player(userName, true);
             game.players.push(newPlayer);
-            sendMessage(message.channel,`${userName} has joined the game!.`);
+            sendMessage(message.channel, `${userName} has joined the game!.`);
         }
 
     },

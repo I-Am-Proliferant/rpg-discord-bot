@@ -74,13 +74,13 @@ module.exports = {
             }
 
             let amount = 1;
-            if ( ability.range && ability.range.min && ability.range.max ) {
+            if (ability.range && ability.range.min && ability.range.max) {
                 amount = randomRange(ability.range.max, ability.range.min);
             }
             else {
                 dialog.push(`You hear a chilling laugh on the wind...`);
             }
-            
+
             if (ability.effects && ability.effects[0]) {
                 ability.effects.forEach(effect => {
                     if (effect.uses <= 0) {
@@ -104,8 +104,8 @@ module.exports = {
                                 dialog.push(`${target[i].name} is already at full health.`);
                             }
                             else {
-                                dialog.push(target[i].heal( amount ));
-                                dialog.push(player.damage( Math.floor( amount / 3 )));
+                                dialog.push(target[i].heal(amount));
+                                dialog.push(player.damage(Math.floor(amount / 3)));
                             }
                         }
                         player.aggro += amount * 2;
@@ -204,12 +204,12 @@ module.exports = {
 
                     }
                 });
-    
+
             }
             else {
                 dialog.push(`Screams echo in your mind...`);
             }
-            }
+        }
 
         if (dialog.length) {
             sendMessage(message.channel, dialog.join('\n'));

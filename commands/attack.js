@@ -16,15 +16,15 @@ module.exports = {
 
         if (!game.enemy || !game.turn.isCombat) {
             dialog.push(`There is currently no active combat. Try !adventure to start one.`);
-            sendMessage(message.channel,dialog);
+            sendMessage(message.channel, dialog);
             return;
         }
 
         if (game.turn.userName === userName) {
             const player = game.getPlayerFromCombat(userName);
-            if(!player) {
+            if (!player) {
                 dialog.push(`You are not in combat. Try !adventure to join one.`);
-                sendMessage(message.channel,dialog);
+                sendMessage(message.channel, dialog);
                 return;
             }
             else {
@@ -33,8 +33,8 @@ module.exports = {
             }
 
         }
-        if(dialog.length) {
-            sendMessage(message.channel,dialog.join('\n'));
+        if (dialog.length) {
+            sendMessage(message.channel, dialog.join('\n'));
         }
     }
 };

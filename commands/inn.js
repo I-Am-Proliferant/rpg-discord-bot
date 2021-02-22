@@ -19,15 +19,15 @@ module.exports = {
         const player = game.getPlayer(userName);
 
         if (!player) {
-            sendMessage(message.channel,`You don't seem to exist. Maybe try the !init command?`);
+            sendMessage(message.channel, `You don't seem to exist. Maybe try the !init command?`);
             return;
         }
 
         const inCombat = (game.combat.find(({ name }) => name === userName) || false);
         if (inCombat) {
             dialog.push(`You can't do this while in combat.`);
-            if(dialog.length) {
-                sendMessage(message.channel,dialog.join('\n'));
+            if (dialog.length) {
+                sendMessage(message.channel, dialog.join('\n'));
             }
             return;
         }
@@ -57,8 +57,8 @@ module.exports = {
         else {
             dialog.push(`Come back when you have at least ${innPrice} gold.`);
         }
-        if(dialog.length) {
-            sendMessage(message.channel,dialog.join('\n'));
+        if (dialog.length) {
+            sendMessage(message.channel, dialog.join('\n'));
         }
     }
 };
