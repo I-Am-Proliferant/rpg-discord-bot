@@ -28,7 +28,7 @@ module.exports = {
             statSheet.push(`Experience: ${player.exp}/${player.expNeeded}`);
             statSheet.push(`Gold: ${player.gold}`);
             statSheet.push(`-------Equipment-------`);
-            const equipmentType = ['2-Handed', 'Main Hand', 'Off Hand', 'Armor', 'Ring'];
+            const equipmentType = ['2-Handed', 'Main Hand', 'Off Hand', 'Armor', 'Ring', 'Class'];
             equipmentType.forEach(eType => {
                 const equipped = player.getEquipment(eType);
                 if (equipped.name !== 'none') {
@@ -55,9 +55,11 @@ module.exports = {
 
                 player.abilities.forEach(ability => {
                     let abilityInfo = `${ability.name}: `;
-                    ability.effects.forEach(e => {
-                        abilityInfo += ` [${e.name}: ${e.uses}/${e.usesMax}] `;
-                    })
+                    if (ability.effects && ability.effects[0]) {
+                        ability.effects.forEach(e => {
+                            abilityInfo += ` [${e.name}: ${e.uses}/${e.usesMax}] `;
+                        })
+                    }
                     statSheet.push(abilityInfo);
                 }
                 );
@@ -68,6 +70,12 @@ module.exports = {
                 player.effects.forEach(effect => {
                     let effectInfo = `${effect.name}: `;
                     if(effect.valueType && effect.value) effectInfo += ` [${effect.value}${effect.valueType === 'percent' ? '%' : ''}] `;
+                    else if(effect.value) effectInfo += ` [${effect.value}] `;
+                    else if(effect.stats && effect.stats[0]) {
+                        effect.stats.forEach(e => {
+                            effectInfo += ` [${e.name} ${e.value}${effect.valueType === 'percent' ? '%' : ''}] `;
+                        })
+                    }
                     statSheet.push(effectInfo);
                 }
                 );
