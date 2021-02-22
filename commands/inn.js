@@ -1,5 +1,5 @@
 const { randomRange } = require('../lib/random');
-const utils = require('../lib/utils');
+const { sendMessage } = require('../lib/utils');
 
 module.exports = {
     name: 'inn',
@@ -19,7 +19,7 @@ module.exports = {
         const player = game.getPlayer(userName);
 
         if (!player) {
-            utils.sendMessage(message.channel,`You don't seem to exist. Maybe try the !init command?`);
+            sendMessage(message.channel,`You don't seem to exist. Maybe try the !init command?`);
             return;
         }
 
@@ -27,7 +27,7 @@ module.exports = {
         if (inCombat) {
             dialog.push(`You can't do this while in combat.`);
             if(dialog.length) {
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
             }
             return;
         }
@@ -35,7 +35,7 @@ module.exports = {
         // if (player.hp >= player.hpMax) {
         //     dialog.push(`You are currently at full health.`);
         //     if(dialog.length) {
-        //         utils.sendMessage(message.channel,dialog.join('\n'));
+        //         sendMessage(message.channel,dialog.join('\n'));
         //     }
         //     return;
         // }
@@ -58,7 +58,7 @@ module.exports = {
             dialog.push(`Come back when you have at least ${innPrice} gold.`);
         }
         if(dialog.length) {
-            utils.sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };

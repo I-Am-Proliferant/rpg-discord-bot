@@ -1,4 +1,4 @@
-const utils = require('../lib/utils');
+const { sendMessage } = require('../lib/utils');
 
 module.exports = {
     name: 'run',
@@ -18,7 +18,7 @@ module.exports = {
         if (!game.enemy || !game.turn.isCombat) {
             dialog.push(`There is currently no active combat. Try !adventure to start one.`);
             if(dialog.length) {
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
             }
             return;
         }
@@ -27,7 +27,7 @@ module.exports = {
             const player = game.getPlayer(userName);
             if (!player) {
                 dialog.push(`Who are you ${userName}?`);
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
             
@@ -58,7 +58,7 @@ module.exports = {
 
         }
         if(dialog.length) {
-            utils.sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };

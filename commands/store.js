@@ -1,4 +1,4 @@
-const utils = require('../lib/utils');
+const { sendMessage } = require('../lib/utils');
 
 module.exports = {
     name: 'store',
@@ -17,13 +17,13 @@ module.exports = {
         const player = game.getPlayer(userName);
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
-            utils.sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel,dialog.join('\n'));
             return;
         }
 
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-            utils.sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel,dialog.join('\n'));
             return;
         }
 
@@ -31,7 +31,7 @@ module.exports = {
         if (inCombat) {
             dialog.push(`You can't do this while in combat.`);
             if(dialog.length) {
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
             }
             return;
         }
@@ -39,18 +39,21 @@ module.exports = {
         if (!args[0]) {
             if(!game.store[0]) {
                 dialog.push(`Whoops. Looks like I'm all out of items for the day. Try again tomorrow.`);
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
+            dialog.push('```css');
             game.store.forEach(item => {
-                dialog.push(`$${item.price} [${item.type}] **${item.name}** x${item.quantity}`);
+                dialog.push(`$${item.price} [${item.type}] ${item.name} ${item.quantity}`);
             })
+            dialog.push('```');
+
         }
         else {
             const storeItem = game.store.find(e => e.name.toUpperCase().includes(args[0].toUpperCase()));
             if (!storeItem) {
                 dialog.push(`Doesn't look like I have that item in stock.`);
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
 
@@ -71,7 +74,7 @@ module.exports = {
             }
         }
         if(dialog.length) {
-            utils.sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };

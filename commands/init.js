@@ -1,5 +1,5 @@
 const { Player } = require('../lib/player.js');
-const utils = require('../lib/utils');
+const { sendMessage } = require('../lib/utils');
 
 module.exports = {
     name: 'init',
@@ -14,12 +14,12 @@ module.exports = {
         const player = game.getPlayer(userName);
         // const inGame = ( false );
         if (player) {
-            utils.sendMessage(message.channel,`You're already part of the game ${userName}`);
+            sendMessage(message.channel,`You're already part of the game ${userName}`);
         }
         else {
             const newPlayer = new Player(userName, true);
             game.players.push(newPlayer);
-            utils.sendMessage(message.channel,`${userName} has joined the game!.`);
+            sendMessage(message.channel,`${userName} has joined the game!.`);
         }
 
     },

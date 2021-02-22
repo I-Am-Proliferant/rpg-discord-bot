@@ -1,5 +1,5 @@
 const { randomRange } = require('../lib/random.js');
-const utils = require('../lib/utils');
+const { sendMessage } = require('../lib/utils');
 
 //... This might turn into !use once base item class is setup
 module.exports = {
@@ -22,13 +22,13 @@ module.exports = {
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
             if (dialog.length) {
-                utils.sendMessage(message.channel, dialog.join('\n'));
+                sendMessage(message.channel, dialog.join('\n'));
             }
             return;
         }
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-            utils.sendMessage(message.channel, dialog.join('\n'));
+            sendMessage(message.channel, dialog.join('\n'));
             return;
         }
 
@@ -39,12 +39,12 @@ module.exports = {
 
             if (!ability) {
                 dialog.push(`You don't know this ability.`)
-                utils.sendMessage(message.channel, dialog.join('\n'));
+                sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
             if (!ability.target[0]) {
                 dialog.push('This ability doesn\'t have a target.')
-                utils.sendMessage(message.channel, dialog.join('\n'));
+                sendMessage(message.channel, dialog.join('\n'));
                 return
             }
 
@@ -69,7 +69,7 @@ module.exports = {
 
             if (!target && !target[0]) {
                 dialog.push('Please specify a valid target for this ability.')
-                utils.sendMessage(message.channel, dialog.join('\n'));
+                sendMessage(message.channel, dialog.join('\n'));
                 return
             }
 
@@ -212,7 +212,7 @@ module.exports = {
             }
 
         if (dialog.length) {
-            utils.sendMessage(message.channel, dialog.join('\n'));
+            sendMessage(message.channel, dialog.join('\n'));
         }
     }
 };

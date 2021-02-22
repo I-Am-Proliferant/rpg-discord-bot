@@ -3,11 +3,9 @@ const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 const cooldowns = new Discord.Collection();
 
-const Player = require('./lib/player.js');
-const Game = require('./lib/game.js');
+const { Game } = require('./lib/game.js');
 
-const game = new Game.Game();
-const player = new Player.Player();
+const game = new Game();
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();

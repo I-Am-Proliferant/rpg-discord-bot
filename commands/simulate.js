@@ -1,4 +1,4 @@
-const utils = require('../lib/utils');
+const { sendMessage } = require('../lib/utils');
 const { random } = require('../lib/random.js');
 
 module.exports = {
@@ -76,6 +76,6 @@ module.exports = {
 
         }
 
-        utils.sendMessage(message.channel, dialog.join('\n'));
+        sendMessage(message.channel, dialog.join('\n'));
     },
 };

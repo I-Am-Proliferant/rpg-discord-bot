@@ -1,4 +1,4 @@
-const utils = require('../lib/utils');
+const { sendMessage } = require('../lib/utils');
 
 module.exports = {
     name: 'combat',
@@ -7,10 +7,10 @@ module.exports = {
     args: true,
     usage: '<user>',
     guildOnly: false,
-    cooldown: 5,
+    cooldown: 2,
     execute(message, args, game) {
         if (!game.combat || !game.combat.length) {
-            utils.sendMessage(message.channel,`There is currently no active combat`);
+            sendMessage(message.channel,`There is currently no active combat`);
             return;
         }
         if (args[0] === 'list') {
@@ -19,10 +19,10 @@ module.exports = {
                 const info = `${player.name} Health: ${player.hp}/${player.totalStats.hpMax} Speed: ${player.totalStats.speed} Aggro: ${player.aggro}`;
                 combatList.push(info);
             });
-            utils.sendMessage(message.channel,combatList);
+            sendMessage(message.channel,combatList);
         }
         else if (args[0] === 'skip') {
-            utils.sendMessage(message.channel,game.updateCombat());
+            sendMessage(message.channel,game.updateCombat());
         }
     }
 };

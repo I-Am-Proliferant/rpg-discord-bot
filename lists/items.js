@@ -1,7 +1,7 @@
 module.exports = [
     {name:'Token', type:'Coin', description:'Proof that you defeated an enemy'},
     {name:'Trophy', type:'Trophy', description:'Proof that you defeated an enemy'},
-    {name:'Magic Clay', type:'Resource', description:'Used with sculpting tools to create monsters that will aid you in combat.'},
+    {name:'Magic Clay', type:'Resource', description:'Used with sculpting tools to create monsters that will aid you in combat.', value: 100},
     
     {name:'Wand of Everything', type:'Main Hand', description:'Common sword', target: ['enemy'], 
         abilities: [

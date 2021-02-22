@@ -1,5 +1,5 @@
 const { randomRange } = require('../lib/random.js');
-const utils = require('../lib/utils');
+const { sendMessage } = require('../lib/utils');
 
 //... This might turn into !use once base item class is setup
 module.exports = {
@@ -22,13 +22,13 @@ module.exports = {
         if (!player) {
             dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
             if(dialog.length) {
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
             }
             return;
         }
         if (player.dead) {
             dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
-            utils.sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel,dialog.join('\n'));
             return;
         }
 
@@ -39,12 +39,12 @@ module.exports = {
 
             if (!scroll) {
                 dialog.push(`Can't find the scroll '${args[0]}' in your inventory.`)
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
                 return;
             }
             if (!scroll.target[0]) {
                 dialog.push('This scroll doesn\'t have a target.')
-                utils.sendMessage(message.channel,dialog.join('\n'));
+                sendMessage(message.channel,dialog.join('\n'));
                 return
             }
             if (scroll.target.find(e => e === 'enemy')) {
@@ -102,7 +102,7 @@ module.exports = {
 
         }
         if(dialog.length) {
-            utils.sendMessage(message.channel,dialog.join('\n'));
+            sendMessage(message.channel,dialog.join('\n'));
         }
     }
 };
