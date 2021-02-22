@@ -63,7 +63,7 @@ module.exports = [
     {name:'Sculpting Tools', type:'Class', description:`Allows summoning of monsters. Requires Sculpting Clay.`, target: ['self'], effects: [{name:'heal',uses:1,usesMax:1}], range:{min:25,max:50}, stats:{}, value: 200, requirements:[]},
     {name:'Guantlets', type:'Class', description:`Gives you the ability to survive where others have fallen.`, target: ['self'], 
         abilities: [
-            {name:'Taunt', type:'Ability', description: `Generates a burst of aggro`, target: ['self']}
+            {name:'Taunt', type:'Ability', description: `Generates a burst of aggro`, target: ['self'], effects: [{ name: 'taunt', uses: 5, usesMax: 5, duration: 0 }], range: { min: 5, max: 10 }}
         ], 
         effects: [
             {name:'Damage Mitigation',valueType: 'percent', value:25, description:'A significant boost to aggro'}
