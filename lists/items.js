@@ -28,7 +28,7 @@ module.exports = [
         ], range: {}, stats: {}, value: 5000, requirements: []
     },
 
-    { name: 'Club', type: 'Main Hand', description: 'Common sword', target: ['enemy'], effects: [], range: {}, stats: { 'power': 2 }, value: 500, requirements: [{ name: 'level', value: 1 }] },
+    { name: 'Small Club', type: 'Main Hand', description: 'Common sword', target: ['enemy'], effects: [], range: {}, stats: { 'power': 2 }, value: 500, requirements: [{ name: 'level', value: 1 }] },
     { name: 'Short Sword', type: 'Main Hand', description: 'Common sword', target: ['enemy'], effects: [], range: {}, stats: { 'power': 3 }, value: 500, requirements: [{ name: 'level', value: 1 }] },
     { name: 'Long Sword', type: 'Main Hand', description: 'Common sword', target: ['enemy'], effects: [], range: {}, stats: { 'power': 4 }, value: 750, requirements: [{ name: 'level', value: 1 }] },
     { name: 'Rapier', type: 'Main Hand', description: 'Common sword', target: ['enemy'], effects: [], range: {}, stats: { 'power': 3, 'speed': 3 }, value: 500, requirements: [{ name: 'level', value: 1 }] },
