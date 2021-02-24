@@ -50,6 +50,8 @@ module.exports = {
                     })
                 })
             }
+            
+            player.exhaustion = false;
 
             const healAmount = randomRange(player.totalStats.hpMax, player.totalStats.hpMax / 3);
             dialog.push(player.heal(healAmount));

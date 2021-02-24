@@ -17,21 +17,28 @@ module.exports = {
 
         if (!game.enemy || !game.turn.isCombat) {
             dialog.push(`There is currently no active combat. Try !adventure to start one.`);
-            if (dialog.length) {
-                sendMessage(message.channel, dialog.join('\n'));
-            }
+            sendMessage(message.channel, dialog.join('\n'));
+            return;
+        }
+
+        const player = game.getPlayer(userName);
+        if (!player) {
+            dialog.push(`Who are you ${userName}?`);
+            sendMessage(message.channel, dialog.join('\n'));
+            return;
+        }
+
+        if (player.exhaustion) {
+            dialog.push(`You're too exhausted to run away.`);
+            sendMessage(message.channel, dialog.join('\n'));
             return;
         }
 
         if (game.turn.userName === userName) {
-            const player = game.getPlayer(userName);
-            if (!player) {
-                dialog.push(`Who are you ${userName}?`);
-                sendMessage(message.channel, dialog.join('\n'));
-                return;
-            }
 
-            dialog.push(`${player.name} retreats from combat!`);
+            dialog.push(`${player.name} retreats from combat and is now exhausted!`);
+            //... Add random chance to be exhausted.
+            player.exhaustion = true;
             game.combat.splice(game.combat.indexOf(player), 1);
 
             if (game.combat.length === 1 && game.combat[0].name === game.enemy.name) {

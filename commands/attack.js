@@ -33,6 +33,12 @@ module.exports = {
             }
 
         }
+        else {
+            dialog.push('```css');
+            dialog.push(`[It is currently .${game.turn.userName}s turn]`);
+            dialog.push('```');
+        }
+
         if (dialog.length) {
             sendMessage(message.channel, dialog.join('\n'));
         }

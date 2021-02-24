@@ -38,8 +38,14 @@ module.exports = {
             }
             return;
         }
-
+        
         dialog.push(player.heal(randomRange((player.level * 2) + 3, player.level)));
+        
+        if (player.exhausted){
+            player.exhausted = false;
+            dialog.push(`${player.name} recovers from their exhaustion`);
+        }
+
         if (dialog.length) {
             sendMessage(message.channel, dialog.join('\n'));
         }

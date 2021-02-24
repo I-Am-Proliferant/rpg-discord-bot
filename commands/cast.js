@@ -32,6 +32,15 @@ module.exports = {
             return;
         }
 
+        if (game.enemy && game.turn.userName !== userName) {
+            dialog.push('```css');
+            dialog.push(`[It is currently .${game.turn.userName}s turn]`);
+            dialog.push('```');
+            sendMessage(message.channel, dialog.join('\n'));
+            return;
+        }
+        
+        
         //... if (player.isTurn)
         if (!game.enemy || game.turn.userName === userName) {
             const ability = player.getAbilityByName(args[0]);
