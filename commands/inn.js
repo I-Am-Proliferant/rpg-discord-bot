@@ -43,14 +43,14 @@ module.exports = {
         if (player.gold >= innPrice) {
             player.gold -= innPrice;
 
-            if (player.abilities && player.abilities[0]) {
+            if (player.abilities && player.abilities.length > 0) {
                 player.abilities.forEach(ability => {
                     ability.effects.forEach(effect => {
                         effect.uses = effect.usesMax;
                     })
                 })
             }
-            
+
             player.exhaustion = false;
 
             const healAmount = randomRange(player.totalStats.hpMax, player.totalStats.hpMax / 3);

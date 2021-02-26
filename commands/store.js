@@ -36,38 +36,52 @@ module.exports = {
             return;
         }
 
-        if (!args[0]) {
-            if (!game.store[0]) {
+        if (args.length <= 0) {
+            if (game.store.length <= 0) {
                 dialog.push(`Whoops. Looks like I'm all out of items for the day. Try again tomorrow.`);
                 sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
             dialog.push('```css');
-            game.store.forEach(item => {
-                dialog.push(`$${item.price} [${item.type}] ${item.name} ${item.quantity}`);
+            game.store.forEach(i => {
+                const item = i.item;
+                const itemQuantity = i.quantity;
+                dialog.push(`$${item.price} [${item.type}] ${item.name} ${itemQuantity}`);
             })
             dialog.push('```');
 
         }
         else {
-            const storeItem = game.store.find(e => e.name.toUpperCase().includes(args[0].toUpperCase()));
+            const exactItem = game.store.find(e => e.item.name.toLowerCase() === args[0].toLowerCase());
+            const fuzzyItem = game.store.find(e => e.item.name.toLowerCase().includes(args[0].toLowerCase()));
+            const storeInventoryItem = exactItem || fuzzyItem;
+            const storeItem = storeInventoryItem.item;
+            // const storeInventoryItem.quantity = storeInventoryItem.quantity;
             if (!storeItem) {
                 dialog.push(`Doesn't look like I have that item in stock.`);
                 sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
 
-            if (player.gold >= storeItem.price) {
-                player.gold -= storeItem.price;
-                player.addToInventory(storeItem);
+            let purchaseAmount = args[1] || 1;
+            //... Todo make sure its a non zero number
+
+            if (storeInventoryItem.quantity < purchaseAmount) {
+                purchaseAmount = storeInventoryItem.quantity;
+            }
+
+            const totalPrice = storeItem.price * purchaseAmount;
+
+            if (player.gold >= totalPrice) {
+                player.gold -= totalPrice;
+                player.addToInventory(storeItem, purchaseAmount);
+
                 //... Add option to buy in bulk
-                dialog.push(`Before quantity ${storeItem.quantity}`);
-                storeItem.quantity--;
-                dialog.push(`After quantity ${storeItem.quantity}`);
-                if (storeItem.quantity <= 0) {
+                storeInventoryItem.quantity -= purchaseAmount ;
+                if (storeInventoryItem.quantity <= 0) {
                     game.store.splice(game.store.indexOf(storeItem), 1);
                 }
-                dialog.push(`You bought 1 ${storeItem.name} for ${storeItem.price} gold.`);
+                dialog.push(`You bought ${purchaseAmount} ${storeItem.name} for ${totalPrice} gold.`);
             }
             else {
                 dialog.push(`You don't have enough gold.`);

@@ -1,5 +1,6 @@
 const { sendMessage } = require('../lib/utils');
 
+
 module.exports = {
     name: 'sell',
     aliases: ['$'],
@@ -43,6 +44,7 @@ module.exports = {
         const sellPrice = Math.floor(item.value * .5);
         player.gold += sellPrice;
         dialog.push(`${item.name} sold for ${sellPrice} gold.`);
+        game.addToStore(item, 1);
 
         if (dialog.length) {
             sendMessage(message.channel, dialog.join('\n'));

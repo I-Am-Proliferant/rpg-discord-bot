@@ -29,7 +29,7 @@ module.exports = {
             statSheet.push(`Gold: ${player.gold}`);
 
 
-            if (player.bonus && player.bonus[0]) {
+            if (player.bonus && player.bonus.length > 0) {
                 statSheet.push(`[--------Bonuses--------]`);
 
                 player.bonus.forEach(b => {
@@ -39,12 +39,12 @@ module.exports = {
                 }
                 );
             }
-            if (player.abilities && player.abilities[0]) {
+            if (player.abilities && player.abilities.length > 0) {
                 statSheet.push(`[-------Abilities-------]`);
 
                 player.abilities.forEach(ability => {
                     let abilityInfo = `${ability.name}: `;
-                    if (ability.effects && ability.effects[0]) {
+                    if (ability.effects && ability.effects.length > 0) {
                         ability.effects.forEach(e => {
                             abilityInfo += ` [${e.name}: ${e.uses}/${e.usesMax}] `;
                         })
@@ -54,7 +54,7 @@ module.exports = {
                 );
             }
 
-            if (player.equipment && player.equipment[0]) {
+            if (player.equipment && player.equipment.length > 0) {
                 statSheet.push(`[-------Equipment-------]`);
                 player.equipment.forEach(e => {
                     let itemInfo = `[${e.type}] ${e.name}:`;
@@ -66,14 +66,14 @@ module.exports = {
                 });
             }
 
-            if (player.effects && player.effects[0]) {
+            if (player.effects && player.effects.length > 0) {
                 statSheet.push(`[--------Effects--------]`);
 
                 player.effects.forEach(effect => {
                     let effectInfo = `${effect.name}: `;
                     if (effect.valueType && effect.value) effectInfo += ` [${effect.value}${effect.valueType === 'percent' ? '%' : ''}] `;
                     else if (effect.value) effectInfo += ` [${effect.value}] `;
-                    else if (effect.stats && effect.stats[0]) {
+                    else if (effect.stats && effect.stats.length > 0) {
                         effect.stats.forEach(e => {
                             effectInfo += ` [${e.name} ${e.value}${effect.valueType === 'percent' ? '%' : ''}] `;
                         })

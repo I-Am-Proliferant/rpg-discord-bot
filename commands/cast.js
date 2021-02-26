@@ -51,7 +51,7 @@ module.exports = {
                 sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
-            if (!ability.target[0]) {
+            if (ability.target.length <= 0) {
                 dialog.push('This ability doesn\'t have a target.')
                 sendMessage(message.channel, dialog.join('\n'));
                 return
@@ -76,7 +76,7 @@ module.exports = {
             }
 
 
-            if (!target && !target[0]) {
+            if (!target) {
                 dialog.push('Please specify a valid target for this ability.')
                 sendMessage(message.channel, dialog.join('\n'));
                 return
@@ -90,7 +90,7 @@ module.exports = {
                 dialog.push(`You hear a chilling laugh on the wind...`);
             }
 
-            if (ability.effects && ability.effects[0]) {
+            if (ability.effects && ability.effects.length > 0) {
                 ability.effects.forEach(effect => {
                     if (effect.uses <= 0) {
                         dialog.push(`You must rest at the !inn before you can use ${effect.name} again.`);
@@ -155,14 +155,14 @@ module.exports = {
                             dialog.push(`You need to be in combat to use this.`);
                         }
                         else {
-                            if (effect.stats && effect.stats[0]) {
+                            if (effect.stats && effect.stats.length > 0) {
                                 const duration = effect.duration + game.turn.round;
                                 effect.stats.forEach(stat => {
                                     for (i = 0; i < target.length; i++) {
                                         target[i].bonus.push({ name: stat.name, amount: amount, duration: duration });
                                         target[i].calcStats();
                                         dialog.push('```css');
-                                        dialog.push(`${player.name} increases ${target[0].name}'s ${stat.name} by ${amount} for ${effect.duration} rounds.`);
+                                        dialog.push(`${player.name} increases ${target[i].name}'s ${stat.name} by ${amount} for ${effect.duration} rounds.`);
                                         dialog.push('```');
                                     }
                                 })
@@ -179,14 +179,14 @@ module.exports = {
                             dialog.push(`You need to be in combat to use this.`);
                         }
                         else {
-                            if (effect.stats && effect.stats[0]) {
+                            if (effect.stats && effect.stats.length > 0) {
                                 const duration = effect.duration + game.turn.round;
                                 effect.stats.forEach(stat => {
                                     for (i = 0; i < target.length; i++) {
                                         target[i].bonus.push({ name: stat.name, amount: -amount, duration: duration });
                                         target[i].calcStats();
                                         dialog.push('```css');
-                                        dialog.push(`${player.name} decreases ${target[0].name}'s ${stat.name} by ${amount} for ${effect.duration} rounds.`);
+                                        dialog.push(`${player.name} decreases ${target[i].name}'s ${stat.name} by ${amount} for ${effect.duration} rounds.`);
                                         dialog.push('```');
                                     }
                                 })

@@ -1,4 +1,4 @@
-module.exports = [
+const itemArray = [
     { name: 'Token', type: 'Coin', description: 'Proof that you defeated an enemy' },
     { name: 'Trophy', type: 'Trophy', description: 'Proof that you defeated an enemy' },
     { name: 'Magic Clay', type: 'Resource', description: 'Used with sculpting tools to create monsters that will aid you in combat.', value: 100 },
@@ -131,3 +131,13 @@ module.exports = [
         range: { min: 25, max: 50 }, stats: {}, value: 200, requirements: []
     }
 ];
+
+
+getItem = function (name) {
+    const item = itemArray.find(e => e.name.toLowerCase() === name.toLowerCase());
+    if (item) return item;
+    return { name: 'Piece of the Void', type: 'Resource', description: `This isn't part of the game. Where did you get this!?`, value: 1, quantity: 1 }
+}
+
+
+module.exports = { itemArray, getItem };

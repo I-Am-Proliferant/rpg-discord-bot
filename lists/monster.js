@@ -1,7 +1,5 @@
-const items = require('./items.js');
-getItem = function (name) {
-    return items.find(e => e.name.toUpperCase() === name.toUpperCase());
-}
+const { getItem } = require('./items.js');
+
 module.exports = [
     {
         name: 'Normal Slime', trophyType: 'Slime', locations: [], level: 1, hpMax: 10, power: 5, defense: 3, speed: 5, exp: 25, gold: 25, effects: [], drops: [

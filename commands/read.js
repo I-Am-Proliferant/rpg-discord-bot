@@ -50,7 +50,7 @@ module.exports = {
                 sendMessage(message.channel, dialog.join('\n'));
                 return;
             }
-            if (!scroll.target[0]) {
+            if (scroll.target.length <= 0) {
                 dialog.push('This scroll doesn\'t have a target.')
                 sendMessage(message.channel, dialog.join('\n'));
                 return
