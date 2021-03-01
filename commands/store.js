@@ -1,4 +1,6 @@
 const { sendMessage } = require('../lib/utils');
+const { Player } = require('../lib/player.js');
+
 
 module.exports = {
     name: 'store',
@@ -14,11 +16,10 @@ module.exports = {
         if (!userName) {
             return;
         }
-        const player = game.getPlayer(userName);
+        let player = game.getPlayer(userName);
         if (!player) {
-            dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
-            sendMessage(message.channel, dialog.join('\n'));
-            return;
+            player = new Player(userName, true);
+            game.players.push(player);
         }
 
         if (player.dead) {

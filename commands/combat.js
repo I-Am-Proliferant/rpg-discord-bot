@@ -4,7 +4,7 @@ module.exports = {
     name: 'combat',
     aliases: ['c'],
     description: 'Starts an adventure by summoning an enemy. Adds user to the combat',
-    args: true,
+    args: false,
     usage: '<user>',
     guildOnly: false,
     cooldown: 2,
@@ -13,16 +13,17 @@ module.exports = {
             sendMessage(message.channel, `There is currently no active combat`);
             return;
         }
-        if (args[0] === 'list') {
+        if (args.length === 0 || args[0] === 'list') {
             const combatList = []
+
+            const enemyInfo = `${game.enemy.name} Health: ${game.enemy.hp}/${game.enemy.totalStats.hpMax} Speed: ${game.enemy.totalStats.speed} Aggro: ${game.enemy.aggro}`;
+            combatList.push(enemyInfo);
+
             game.combat.forEach(function (player) {
                 const info = `${player.name} Health: ${player.hp}/${player.totalStats.hpMax} Speed: ${player.totalStats.speed} Aggro: ${player.aggro}`;
                 combatList.push(info);
             });
             sendMessage(message.channel, combatList);
-        }
-        else if (args[0] === 'skip') {
-            sendMessage(message.channel, game.updateCombat());
         }
     }
 };

@@ -15,39 +15,30 @@ module.exports = {
             return;
         }
         const dialog = [];
-        const player = game.getPlayer(userName);
-        if (!player) {
-            sendMessage(message.channel, `You don't seem to exist ${userName}. Maybe try the !init command?`);
-            return;
+        let player = game.getPlayer(userName);
+        if (!player) { 
+            player = new Player(userName, true);
+            game.players.push(player);
         }
         if (player.dead) {
             sendMessage(message.channel, `I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
             return;
         }
 
-        const inCombat = (game.combat.find(({ name }) => name === userName) || false);
-        if (inCombat) {
-            dialog.push(`You are already in combat.`);
-        }
-        else {
-            game.combat.push(player);
-            dialog.push(`${userName} joins the combat.`);
-        }
 
-        if (!game.enemy || game.turn.isCombat === false) {
+        game.messageChannel = message.channel;
+
+        if (!game.enemy || !game.turn.isCombat) {
             const enemy = new Player('Monster', false);
             enemy.generateMonster();
             game.enemy = enemy;
-            game.combat.push(enemy);
+            // game.combat.push(enemy);
             dialog.push(`A ${enemy.name} stands in your way!`);
-
             game.startCombat();
+            game.addToCombat(player);
             dialog.push(game.updateCombat())
 
         }
-        game.combat.sort(function (a, b) {
-            return b.getSpeed() - a.getSpeed();
-        });
 
         if (dialog.length) {
             sendMessage(message.channel, dialog.join('\n'));

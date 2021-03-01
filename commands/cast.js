@@ -1,5 +1,7 @@
 const { randomRange } = require('../lib/random.js');
 const { sendMessage } = require('../lib/utils');
+const { Player } = require('../lib/player.js');
+
 
 //... This might turn into !use once base item class is setup
 module.exports = {
@@ -18,31 +20,27 @@ module.exports = {
         if (!userName) {
             return;
         }
-        const player = game.getPlayer(userName);
+        let player = game.getPlayer(userName);
         if (!player) {
-            dialog.push(`You don't seem to exist ${userName}. Maybe try the !init command?`);
-            if (dialog.length) {
-                sendMessage(message.channel, dialog.join('\n'));
-            }
-            return;
+            player = new Player(userName, true);
+            game.players.push(player);
         }
         if (player.dead) {
-            dialog.push(`I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
+            dialog.push(`I'm sorry ${player.name}, but you're dead. Maybe !rest awhile?`);
             sendMessage(message.channel, dialog.join('\n'));
             return;
         }
 
-        if (game.enemy && game.turn.userName !== userName) {
-            dialog.push('```css');
-            dialog.push(`[It is currently .${game.turn.userName}s turn]`);
-            dialog.push('```');
+        if (!player.actionAvailable) {
+            dialog.push(`You have already used your action ${player.name}`);
             sendMessage(message.channel, dialog.join('\n'));
             return;
         }
+
+        
         
         
         //... if (player.isTurn)
-        if (!game.enemy || game.turn.userName === userName) {
             const ability = player.getAbilityByName(args[0]);
             let target = false;
 
@@ -82,6 +80,8 @@ module.exports = {
                 return
             }
 
+            
+
             let amount = 1;
             if (ability.range && ability.range.min && ability.range.max) {
                 amount = randomRange(ability.range.max, ability.range.min);
@@ -103,9 +103,11 @@ module.exports = {
                             else {
                                 dialog.push(target[i].heal(amount));
                             }
+                            player.aggro += amount * 2;
+                            effect.uses--;
+                            game.addToCombat(player);
+                            player.actionAvailable = false;
                         }
-                        player.aggro += amount * 2;
-                        effect.uses--;
                     }
                     else if (effect.name === 'blood heal') {
                         for (i = 0; i < target.length; i++) {
@@ -116,9 +118,11 @@ module.exports = {
                                 dialog.push(target[i].heal(amount));
                                 dialog.push(player.damage(Math.floor(amount / 3)));
                             }
+                            game.addToCombat(player);
+                            player.actionAvailable = false;
+                            player.aggro += amount * 2;
+                            effect.uses--;
                         }
-                        player.aggro += amount * 2;
-                        effect.uses--;
                     }
                     else if (effect.name === 'burn') {
                         if (!inCombat) {
@@ -133,6 +137,8 @@ module.exports = {
                             }
                             player.aggro += amount * 7;
                             effect.uses--;
+                            game.addToCombat(player);
+                            player.actionAvailable = false;
                             dialog.push(game.updateCombat());
                         }
                     }
@@ -147,6 +153,8 @@ module.exports = {
                             dialog.push('```');
                             player.aggro += aggroAmount;
                             effect.uses--;
+                            game.addToCombat(player);
+                            player.actionAvailable = false;
                             dialog.push(game.updateCombat());
                         }
                     }
@@ -167,6 +175,8 @@ module.exports = {
                                     }
                                 })
                                 effect.uses--;
+                                game.addToCombat(player);
+                                player.actionAvailable = false;
                                 dialog.push(game.updateCombat());
                             }
                             else {
@@ -191,6 +201,8 @@ module.exports = {
                                     }
                                 })
                                 effect.uses--;
+                                game.addToCombat(player);
+                                player.actionAvailable = false;
                                 dialog.push(game.updateCombat());
                             }
                             else {
@@ -218,7 +230,6 @@ module.exports = {
             else {
                 dialog.push(`Screams echo in your mind...`);
             }
-        }
 
         if (dialog.length) {
             sendMessage(message.channel, dialog.join('\n'));

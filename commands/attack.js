@@ -1,4 +1,6 @@
 const { sendMessage } = require('../lib/utils');
+const { Player } = require('../lib/player.js');
+
 module.exports = {
     name: 'attack',
     aliases: ['aa', 'at'],
@@ -14,32 +16,35 @@ module.exports = {
         }
         const dialog = [];
 
+        let player = game.getPlayer(userName);
+        if (!player) {
+            player = new Player(userName, true);
+            game.players.push(player);
+        }
+        if (player.dead) {
+            sendMessage(message.channel, `I'm sorry ${userName}, but you're dead. Maybe !rest awhile?`);
+            return;
+        }
+
         if (!game.enemy || !game.turn.isCombat) {
             dialog.push(`There is currently no active combat. Try !adventure to start one.`);
             sendMessage(message.channel, dialog);
             return;
         }
 
-        if (game.turn.userName === userName) {
-            const player = game.getPlayerFromCombat(userName);
-            if (!player) {
-                dialog.push(`You are not in combat. Try !adventure to join one.`);
-                sendMessage(message.channel, dialog);
-                return;
-            }
-            else {
-                dialog.push(player.attack(game.enemy));
-                dialog.push(game.updateCombat());
-            }
+        game.messageChannel = message.channel;
 
+        game.addToCombat(player);
+        if (player.actionAvailable) {
+            dialog.push(player.attack(game.enemy));
+            dialog.push(game.updateCombat());
+            player.actionAvailable = false;
         }
         else {
-            dialog.push('```css');
-            dialog.push(`[It is currently .${game.turn.userName}s turn]`);
-            dialog.push('```');
+            dialog.push(`You have already used your action ${player.name}`);
         }
 
-        if (dialog.length) {
+        if (dialog.length > 0) {
             sendMessage(message.channel, dialog.join('\n'));
         }
     }

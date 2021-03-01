@@ -1,5 +1,7 @@
 const { randomRange } = require('../lib/random');
 const { sendMessage } = require('../lib/utils');
+const { Player } = require('../lib/player.js');
+
 
 module.exports = {
     name: 'inn',
@@ -16,11 +18,11 @@ module.exports = {
         if (!userName) {
             return;
         }
-        const player = game.getPlayer(userName);
+        let player = game.getPlayer(userName);
 
         if (!player) {
-            sendMessage(message.channel, `You don't seem to exist. Maybe try the !init command?`);
-            return;
+            player = new Player(userName, true);
+            game.players.push(player);
         }
 
         const inCombat = (game.combat.find(({ name }) => name === userName) || false);
