@@ -210,20 +210,7 @@ module.exports = {
                             }
                         }
                     }
-                    else if (effect.name === 'summon') {
-                        if (!inCombat) {
-                            dialog.push(`You need to be in combat to use this.`);
-                        }
 
-                        //... need another arg specifying type of monster to summon and another for clay amount
-                        //... Have to specify how much clay you want to use where the cost per type is the minimum
-                        //... More clay ups the version and stats of the monster
-                        //... check for enough trophies of the monster type for it to be eligible
-                        //... Create the monster and assign control to the player
-                        //... Add the monster to game.summons[] for the duration
-                        //... Clean up summons when duration is over, player dies or combat ends
-
-                    }
                 });
 
             }

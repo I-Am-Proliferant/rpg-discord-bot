@@ -23,6 +23,13 @@ module.exports = {
                 const info = `${player.name} Health: ${player.hp}/${player.totalStats.hpMax} Speed: ${player.totalStats.speed} Aggro: ${player.aggro}`;
                 combatList.push(info);
             });
+
+            if (game.summons.length > 0) {
+                game.summons.forEach(function (summon) {
+                    const summonInfo = `${summon.name} Health: ${summon.hp}/${summon.totalStats.hpMax} Speed: ${summon.totalStats.speed} Aggro: ${summon.aggro}`;
+                    combatList.push(summonInfo);
+                });
+            }
             sendMessage(message.channel, combatList);
         }
     }
