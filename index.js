@@ -19,8 +19,6 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     console.log('Ready!');
-    client.user.setUsername('The Dungeon Master');
-
 });
 
 client.on('message', message => {
